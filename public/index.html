@@ -1,0 +1,1916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Rytheraju – Farmer to Buyer Marketplace</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --g1:#0f4c2a;--g2:#1a6b3c;--g3:#22c55e;--gl:#dcfce7;
+  --gold:#d4a017;--cream:#fafaf7;--text:#1a1a1a;--muted:#6b7280;
+  --border:#e5e7eb;--white:#fff;
+  --sh:0 4px 24px rgba(15,76,42,.10);--shl:0 16px 48px rgba(15,76,42,.16);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--cream);color:var(--text);min-height:100vh;overflow-x:hidden;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(15,76,42,.97);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:space-between;padding:0 5%;height:68px;border-bottom:1px solid rgba(34,197,94,.2);}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;cursor:pointer;}
+.brand-text{font-family:'Playfair Display',serif;color:#fff;font-size:22px;}
+.brand-sub{color:#86efac;font-size:11px;font-weight:500;letter-spacing:1px;display:block;margin-top:-4px;}
+.nav-links{display:flex;align-items:center;gap:6px;}
+.nl{color:#d1fae5;font-size:14px;font-weight:500;padding:8px 14px;border-radius:8px;transition:.2s;cursor:pointer;background:none;border:none;font-family:'DM Sans',sans-serif;}
+.nl:hover{background:rgba(34,197,94,.15);color:#fff;}
+.btn-cta{background:var(--g3);color:var(--g1);font-weight:700;padding:10px 20px;border-radius:10px;border:none;cursor:pointer;font-size:14px;font-family:'DM Sans',sans-serif;transition:.2s;}
+.btn-cta:hover{background:#16a34a;color:#fff;transform:translateY(-1px);}
+.nav-user{display:flex;align-items:center;gap:10px;}
+.nav-avatar{width:34px;height:34px;background:var(--g3);color:var(--g1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;}
+.nav-uname{color:#fff;font-size:13px;font-weight:600;}
+
+/* HERO */
+.hero{min-height:100vh;background:linear-gradient(160deg,var(--g1) 0%,#0d3b22 50%,#071f12 100%);display:flex;align-items:center;padding:100px 5% 60px;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%2322c55e' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E");}
+.hero-inner{max-width:600px;position:relative;z-index:1;animation:fadeUp .8s ease both;}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);color:#86efac;font-size:12px;font-weight:600;padding:6px 14px;border-radius:20px;letter-spacing:1px;margin-bottom:24px;}
+.dot{width:7px;height:7px;background:var(--g3);border-radius:50%;animation:pulse 2s infinite;}
+h1{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,62px);color:#fff;line-height:1.1;margin-bottom:20px;}
+h1 span{color:var(--g3);}
+.hero-desc{color:#a7f3d0;font-size:17px;line-height:1.7;margin-bottom:36px;}
+.hero-btns{display:flex;gap:14px;flex-wrap:wrap;}
+.btn-p{background:var(--g3);color:var(--g1);font-weight:700;padding:14px 30px;border-radius:12px;border:none;cursor:pointer;font-size:15px;font-family:'DM Sans',sans-serif;transition:.25s;display:inline-flex;align-items:center;gap:8px;}
+.btn-p:hover{background:#16a34a;color:#fff;transform:translateY(-2px);box-shadow:0 8px 24px rgba(34,197,94,.35);}
+.btn-o{background:transparent;color:#fff;font-weight:600;padding:14px 30px;border-radius:12px;border:1.5px solid rgba(255,255,255,.3);cursor:pointer;font-size:15px;font-family:'DM Sans',sans-serif;transition:.25s;display:inline-flex;align-items:center;gap:8px;}
+.btn-o:hover{border-color:var(--g3);color:var(--g3);}
+.hero-stats{display:flex;gap:36px;margin-top:48px;padding-top:28px;border-top:1px solid rgba(255,255,255,.1);flex-wrap:wrap;}
+.hs-v{font-family:'Playfair Display',serif;font-size:26px;color:#fff;font-weight:700;}
+.hs-l{font-size:12px;color:#6ee7b7;font-weight:500;margin-top:2px;}
+
+/* PRICE TABLE SECTION */
+.price-section{padding:80px 5%;background:#fff;}
+.section-label{font-size:11px;font-weight:700;letter-spacing:3px;color:var(--g2);text-transform:uppercase;margin-bottom:12px;}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(26px,3.5vw,42px);color:var(--g1);line-height:1.2;margin-bottom:12px;}
+.section-desc{color:var(--muted);font-size:15px;max-width:520px;line-height:1.7;margin-bottom:36px;}
+.price-meta{display:flex;align-items:center;gap:12px;margin-bottom:28px;flex-wrap:wrap;}
+.price-date{background:var(--gl);color:var(--g2);font-size:12px;font-weight:700;padding:6px 14px;border-radius:20px;border:1px solid #86efac;}
+.price-source{font-size:12px;color:var(--muted);}
+.filter-tabs{display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;}
+.ftab{background:#f3f4f6;color:var(--muted);border:none;padding:8px 18px;border-radius:20px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s;}
+.ftab.active{background:var(--g2);color:#fff;}
+.search-row{display:flex;gap:12px;margin-bottom:24px;}
+.price-search{flex:1;border:1.5px solid var(--border);border-radius:10px;padding:10px 16px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:.2s;}
+.price-search:focus{border-color:var(--g2);box-shadow:0 0 0 3px rgba(34,197,94,.1);}
+.price-table{width:100%;border-collapse:collapse;font-size:14px;}
+.price-table thead tr{background:var(--g1);color:#fff;}
+.price-table th{padding:13px 16px;text-align:left;font-weight:600;font-size:13px;}
+.price-table td{padding:12px 16px;border-bottom:1px solid #f0f0f0;}
+.price-table tr:hover td{background:#f0fdf4;}
+.price-table tr:last-child td{border-bottom:none;}
+.crop-cell{display:flex;align-items:center;gap:10px;}
+.crop-em{font-size:22px;}
+.price-up{color:#16a34a;font-weight:700;}
+.price-down{color:#dc2626;font-weight:700;}
+.price-neu{color:var(--muted);font-weight:600;}
+.trend-arrow{font-size:12px;margin-left:4px;}
+.grade-pill{display:inline-block;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:700;color:#fff;}
+.gA{background:#16a34a;}.gB{background:#2563eb;}.gC{background:#d97706;}
+.no-results{text-align:center;padding:48px;color:var(--muted);}
+
+/* FEATURES */
+.features-section{padding:80px 5%;background:var(--cream);}
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px;}
+.feat-card{background:#fff;border-radius:16px;padding:26px;border:1.5px solid var(--border);transition:.25s;}
+.feat-card:hover{border-color:var(--g3);box-shadow:var(--sh);transform:translateY(-3px);}
+.feat-icon{width:50px;height:50px;background:var(--gl);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;}
+.feat-title{font-weight:700;font-size:15px;color:var(--g1);margin-bottom:7px;}
+.feat-desc{font-size:13px;color:var(--muted);line-height:1.6;}
+
+/* HOW IT WORKS */
+.how-section{background:var(--g1);padding:80px 5%;}
+.how-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:28px;margin-top:44px;}
+.how-step{text-align:center;}
+.how-num{width:50px;height:50px;background:rgba(34,197,94,.15);border:1.5px solid rgba(34,197,94,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:20px;color:var(--g3);font-weight:700;margin:0 auto 14px;}
+.how-title{color:#fff;font-weight:700;font-size:14px;margin-bottom:7px;}
+.how-desc{color:#86efac;font-size:13px;line-height:1.6;}
+
+/* AUTH MODAL */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center;padding:20px;}
+.overlay.active{display:flex;animation:fadeIn .2s ease;}
+.modal{background:#fff;border-radius:24px;width:100%;max-width:520px;box-shadow:var(--shl);overflow:hidden;animation:slideUp .3s ease both;max-height:92vh;overflow-y:auto;}
+.modal-hdr{background:linear-gradient(135deg,var(--g1),var(--g2));padding:28px 32px 0;}
+.modal-logo{font-family:'Playfair Display',serif;color:#fff;font-size:19px;margin-bottom:18px;display:flex;align-items:center;gap:8px;}
+.modal-tabs{display:flex;}
+.mtab{flex:1;padding:12px;text-align:center;font-weight:600;font-size:14px;color:rgba(255,255,255,.6);cursor:pointer;border-bottom:2.5px solid transparent;transition:.2s;background:none;border-left:none;border-right:none;border-top:none;font-family:'DM Sans',sans-serif;}
+.mtab.active{color:#fff;border-bottom-color:var(--g3);}
+.modal-body{padding:28px 32px 32px;}
+.role-sel{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+.role-card{border:2px solid var(--border);border-radius:14px;padding:14px;text-align:center;cursor:pointer;transition:.2s;}
+.role-card:hover{border-color:var(--g3);background:#f0fdf4;}
+.role-card.sel{border-color:var(--g2);background:var(--gl);}
+.rc-icon{font-size:30px;margin-bottom:6px;}
+.rc-title{font-weight:700;font-size:13px;color:var(--g1);}
+.rc-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+.fg{margin-bottom:14px;}
+.fg label{display:block;font-size:12px;font-weight:600;color:#374151;margin-bottom:5px;}
+.fg input,.fg select{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 13px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:.2s;}
+.fg input:focus,.fg select:focus{border-color:var(--g2);box-shadow:0 0 0 3px rgba(34,197,94,.1);}
+.fg input.err{border-color:#ef4444;}
+.ferr{font-size:11px;color:#ef4444;margin-top:3px;display:none;}
+.ferr.show{display:block;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.pw-wrap{position:relative;}
+.pw-wrap input{padding-right:40px;}
+.tpw{position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:15px;}
+.str-bar{display:flex;gap:3px;margin-top:5px;}
+.str-seg{flex:1;height:3px;border-radius:2px;background:var(--border);transition:.3s;}
+.str-seg.weak{background:#ef4444;}.str-seg.fair{background:#f59e0b;}.str-seg.good{background:#22c55e;}.str-seg.strong{background:#15803d;}
+.str-lbl{font-size:11px;color:var(--muted);margin-top:3px;}
+.terms{display:flex;align-items:flex-start;gap:9px;margin-bottom:16px;}
+.terms input{margin-top:2px;accent-color:var(--g2);width:15px;height:15px;cursor:pointer;flex-shrink:0;}
+.terms label{font-size:12px;color:var(--muted);line-height:1.5;}
+.terms label a{color:var(--g2);}
+.btn-sub{width:100%;background:var(--g2);color:#fff;font-weight:700;padding:13px;border-radius:12px;border:none;cursor:pointer;font-size:15px;font-family:'DM Sans',sans-serif;transition:.25s;margin-top:4px;}
+.btn-sub:hover{background:var(--g1);transform:translateY(-1px);box-shadow:0 6px 20px rgba(15,76,42,.3);}
+.ffoot{text-align:center;font-size:13px;color:var(--muted);margin-top:14px;}
+.ffoot a{color:var(--g2);font-weight:600;cursor:pointer;}
+.alert-err{background:#fef2f2;border:1px solid #fecaca;color:#dc2626;border-radius:10px;padding:10px 14px;font-size:13px;margin-bottom:14px;display:none;}
+.alert-err.show{display:block;}
+
+/* SUCCESS */
+.succ{text-align:center;padding:16px 0;display:none;}
+.succ.show{display:block;}
+.succ-icon{font-size:60px;margin-bottom:14px;animation:pop .4s cubic-bezier(.175,.885,.32,1.275) both;}
+.succ-title{font-family:'Playfair Display',serif;font-size:24px;color:var(--g1);margin-bottom:8px;}
+.succ-sub{color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:22px;}
+.upill{display:inline-flex;align-items:center;gap:10px;background:var(--gl);border:1.5px solid #86efac;border-radius:40px;padding:10px 18px;margin-bottom:22px;}
+.upill-av{width:34px;height:34px;background:var(--g2);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;}
+.upill-name{font-weight:700;font-size:13px;color:var(--g1);}
+.upill-role{font-size:11px;color:var(--g2);font-weight:600;}
+.btn-dash{background:var(--g2);color:#fff;font-weight:700;padding:12px 34px;border-radius:12px;border:none;cursor:pointer;font-size:14px;font-family:'DM Sans',sans-serif;transition:.25s;}
+.btn-dash:hover{background:var(--g1);}
+
+/* DASHBOARD */
+.dashboard{display:none;min-height:100vh;background:#f8faf9;}
+.dashboard.show{display:block;}
+.dash-nav{background:var(--g1);padding:0 5%;height:68px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+.dash-brand{font-family:'Playfair Display',serif;color:#fff;font-size:19px;display:flex;align-items:center;gap:10px;cursor:pointer;}
+.dash-user{display:flex;align-items:center;gap:10px;}
+.dash-av{width:36px;height:36px;background:var(--g3);color:var(--g1);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;}
+.dash-uname{color:#fff;font-weight:600;font-size:13px;}
+.dash-role{background:rgba(34,197,94,.2);color:#86efac;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;}
+.btn-logout{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:7px 13px;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s;}
+.btn-logout:hover{background:rgba(255,255,255,.2);}
+.dash-body{padding:36px 5%;}
+.dash-welcome h2{font-family:'Playfair Display',serif;font-size:26px;color:var(--g1);margin-bottom:6px;}
+.dash-welcome p{color:var(--muted);font-size:14px;margin-bottom:28px;}
+.dash-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:18px;margin-bottom:32px;}
+.dstat{background:#fff;border-radius:14px;padding:20px;border:1.5px solid var(--border);}
+.dstat-icon{font-size:26px;margin-bottom:10px;}
+.dstat-val{font-family:'Playfair Display',serif;font-size:26px;color:var(--g1);font-weight:700;}
+.dstat-lbl{font-size:12px;color:var(--muted);margin-top:3px;}
+.dash-sec-title{font-family:'Playfair Display',serif;font-size:20px;color:var(--g1);margin-bottom:16px;margin-top:8px;}
+.crop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:16px;margin-bottom:32px;}
+.crop-card{background:#fff;border-radius:14px;padding:18px;border:1.5px solid var(--border);transition:.2s;cursor:pointer;}
+.crop-card:hover{border-color:var(--g3);box-shadow:var(--sh);transform:translateY(-2px);}
+.cc-top{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+.cc-em{font-size:32px;}
+.cc-name{font-weight:700;font-size:14px;color:var(--g1);}
+.cc-loc{font-size:12px;color:var(--muted);margin-top:2px;}
+.cc-price{font-family:'Playfair Display',serif;font-size:20px;color:var(--g2);font-weight:700;}
+.cc-psub{font-size:11px;color:var(--muted);}
+.btn-bid{width:100%;background:var(--gl);color:var(--g1);border:1.5px solid #86efac;border-radius:10px;padding:9px;font-weight:700;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:.2s;margin-top:12px;}
+.btn-bid:hover{background:var(--g2);color:#fff;border-color:var(--g2);}
+
+/* DASH PRICE TABLE */
+.dash-price-wrap{background:#fff;border-radius:16px;border:1.5px solid var(--border);padding:24px;margin-bottom:32px;}
+.dp-table{width:100%;border-collapse:collapse;font-size:13px;}
+.dp-table th{padding:11px 14px;text-align:left;font-weight:600;color:#374151;border-bottom:2px solid var(--border);font-size:12px;text-transform:uppercase;letter-spacing:.5px;}
+.dp-table td{padding:11px 14px;border-bottom:1px solid #f5f5f5;}
+.dp-table tr:last-child td{border-bottom:none;}
+.dp-table tr:hover td{background:#f9fafb;}
+
+/* SIDEBAR TABS */
+.side-tab{display:block;width:100%;text-align:left;padding:11px 20px;background:none;border:none;font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;transition:.15s;border-left:3px solid transparent;margin-bottom:2px;}
+.side-tab:hover{background:#f0fdf4;color:var(--g1);}
+.side-tab.active{background:var(--gl);color:var(--g2);font-weight:700;border-left-color:var(--g2);}
+.prof-row{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid #f5f5f5;}
+.prof-row:last-child{border-bottom:none;}
+.prof-icon{font-size:20px;width:32px;text-align:center;}
+.prof-lbl{font-size:11px;color:var(--muted);margin-bottom:2px;}
+.prof-val{font-size:14px;font-weight:600;color:var(--text);}
+
+/* FOOTER */
+footer{background:var(--g1);color:#6ee7b7;text-align:center;padding:28px 5%;font-size:13px;}
+footer strong{color:#fff;}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes pop{from{transform:scale(0);opacity:0}to{transform:scale(1);opacity:1}}
+
+@media(max-width:768px){
+  .form-row{grid-template-columns:1fr;}
+  .modal-body{padding:20px 18px 26px;}
+  .modal-hdr{padding:22px 18px 0;}
+  nav .nl{display:none;}
+  .price-table{font-size:12px;}
+  .price-table th,.price-table td{padding:10px 10px;}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ LANDING ══ -->
+<div id="landing">
+
+<nav>
+  <div class="brand" onclick="scrollTop()">
+    <span style="font-size:26px">🌿</span>
+    <span><span class="brand-text">Rytheraju</span><span class="brand-sub">రైతేరాజు</span></span>
+  </div>
+  <div class="nav-links" id="navLinks">
+    <button class="nl" onclick="scrollTo({top:document.getElementById('prices').offsetTop-70,behavior:'smooth'})">Market Prices</button>
+    <button class="nl" onclick="scrollTo({top:document.getElementById('features').offsetTop-70,behavior:'smooth'})">Features</button>
+    <button class="nl" onclick="openAuth('login')">Login</button>
+    <button class="btn-cta" onclick="openAuth('register')">Get Started Free</button>
+  </div>
+  <div class="nav-user" id="navUser" style="display:none">
+    <div class="nav-avatar" id="navAv"></div>
+    <span class="nav-uname" id="navUname"></span>
+    <button class="btn-cta" onclick="goToDashboard()">Dashboard</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="badge"><span class="dot"></span> ANDHRA PRADESH • TELANGANA</div>
+    <h1>Sell Your Crops at<br/><span>Real Market</span> Price</h1>
+    <p class="hero-desc">Connect directly with verified buyers. No middlemen. No price cuts. Get paid the price your harvest deserves.</p>
+    <div class="hero-btns">
+      <button class="btn-p" onclick="openAuth('register')">🌾 Register as Farmer</button>
+      <button class="btn-o" onclick="openAuth('register')">🏢 Register as Buyer</button>
+    </div>
+    <div class="hero-stats">
+      <div><div class="hs-v">12,400+</div><div class="hs-l">Registered Farmers</div></div>
+      <div><div class="hs-v">₹8.2 Cr</div><div class="hs-l">Trade Volume</div></div>
+      <div><div class="hs-v">340+</div><div class="hs-l">Verified Buyers</div></div>
+      <div><div class="hs-v">18</div><div class="hs-l">Districts Covered</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARKET PRICES -->
+<section class="price-section" id="prices">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="section-label">Live Market Rates</div>
+    <div class="section-title">Today's Fruits &amp; Vegetables<br/>Mandi Prices</div>
+    <p class="section-desc">Wholesale mandi prices updated daily from APMC markets across Andhra Pradesh &amp; Telangana.</p>
+    <div class="price-meta">
+      <span class="price-date">📅 <span id="landingPriceDate"></span></span>
+      <span class="price-source">Source: APMC Mandi • Agmarknet • NaPanta</span>
+    </div>
+    <div class="filter-tabs">
+      <button class="ftab active" onclick="filterPrices('all',this)">All</button>
+      <button class="ftab" onclick="filterPrices('vegetable',this)">🥦 Vegetables</button>
+      <button class="ftab" onclick="filterPrices('fruit',this)">🍎 Fruits</button>
+      <button class="ftab" onclick="filterPrices('grain',this)">🌾 Grains &amp; Pulses</button>
+      <button class="ftab" onclick="filterPrices('spice',this)">🌶️ Spices</button>
+    </div>
+    <div class="search-row">
+      <input class="price-search" id="priceSearch" placeholder="🔍 Search commodity..." oninput="renderPriceTable()"/>
+    </div>
+    <div style="overflow-x:auto;">
+      <table class="price-table">
+        <thead><tr><th>Commodity</th><th>Unit</th><th>Min Price</th><th>Max Price</th><th>Modal Price</th><th>Change</th><th>Market</th></tr></thead>
+        <tbody id="priceBody"></tbody>
+      </table>
+    </div>
+    <p style="font-size:12px;color:var(--muted);margin-top:14px;">* Prices in ₹ per Quintal (100 kg = 1 Quintal) unless stated. Rates may vary by quality, lot size, and local demand.</p>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section" id="features">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div class="section-label">Why Rytheraju</div>
+    <div class="section-title">Everything a farmer needs<br/>to sell smarter</div>
+    <p class="section-desc">From listing your harvest to getting paid — we handle every step.</p>
+    <div class="feat-grid">
+      <div class="feat-card"><div class="feat-icon">💰</div><div class="feat-title">Real Market Prices</div><div class="feat-desc">Live price data from Agmarknet and AP mandis. Know the fair price before you sell.</div></div>
+      <div class="feat-card"><div class="feat-icon">🤝</div><div class="feat-title">Direct Buyer Connect</div><div class="feat-desc">Chat directly with verified traders, exporters and food processing companies.</div></div>
+      <div class="feat-card"><div class="feat-icon">📊</div><div class="feat-title">Price Trend Charts</div><div class="feat-desc">7-day price history for every crop. Decide the best time to sell with confidence.</div></div>
+      <div class="feat-card"><div class="feat-icon">📸</div><div class="feat-title">Photo Listings</div><div class="feat-desc">Upload up to 4 photos per listing. Let buyers see your crop quality before bidding.</div></div>
+      <div class="feat-card"><div class="feat-icon">🏦</div><div class="feat-title">Secure Payments</div><div class="feat-desc">UPI and bank transfer support. Money goes straight to your account within 24 hours.</div></div>
+      <div class="feat-card"><div class="feat-icon">🌐</div><div class="feat-title">Telugu &amp; English</div><div class="feat-desc">Full Telugu language support across the platform.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+  <div style="max-width:1200px;margin:0 auto;">
+    <div style="color:#86efac;font-size:11px;font-weight:700;letter-spacing:3px;margin-bottom:10px;">HOW IT WORKS</div>
+    <div style="font-family:'Playfair Display',serif;font-size:clamp(24px,3vw,38px);color:#fff;">Simple. Fast. Fair.</div>
+    <div class="how-grid">
+      <div class="how-step"><div class="how-num">1</div><div class="how-title">Create Account</div><div class="how-desc">Register as Farmer or Buyer. Free and takes under 2 minutes.</div></div>
+      <div class="how-step"><div class="how-num">2</div><div class="how-title">List Your Crop</div><div class="how-desc">Add crop details, photos, quantity and your expected price.</div></div>
+      <div class="how-step"><div class="how-num">3</div><div class="how-title">Receive Bids</div><div class="how-desc">Verified buyers place bids. Compare offers and chat directly.</div></div>
+      <div class="how-step"><div class="how-num">4</div><div class="how-title">Get Paid</div><div class="how-desc">Accept a bid, confirm delivery and receive payment via UPI.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="background:var(--gl);padding:60px 5%;text-align:center;">
+  <div class="section-label" style="text-align:center;">JOIN TODAY — IT'S FREE</div>
+  <div class="section-title" style="margin:0 auto 14px;text-align:center;">Ready to get fair prices<br/>for your harvest?</div>
+  <p style="color:var(--muted);font-size:15px;max-width:400px;margin:0 auto 28px;">Join over 12,000 farmers and 340 buyers already trading on Rytheraju.</p>
+  <button class="btn-p" style="font-size:16px;padding:15px 38px;" onclick="openAuth('register')">Create Free Account →</button>
+</section>
+
+<footer>Crafted with ❤️ for the farmers of <strong>Andhra Pradesh</strong> &nbsp;•&nbsp; రైతేరాజు &nbsp;•&nbsp; © 2026 Rytheraju</footer>
+</div><!-- end landing -->
+
+<!-- ══ AUTH MODAL ══ -->
+<div class="overlay" id="authOverlay" onclick="overlayClick(event)">
+  <div class="modal">
+    <div class="modal-hdr">
+      <div class="modal-logo">🌿 Rytheraju</div>
+      <div class="modal-tabs">
+        <button class="mtab active" id="tLogin" onclick="switchTab('login')">Sign In</button>
+        <button class="mtab" id="tReg" onclick="switchTab('register')">Create Account</button>
+      </div>
+    </div>
+    <div class="modal-body">
+
+      <!-- SUCCESS -->
+      <div class="succ" id="succScreen">
+        <div class="succ-icon">🎉</div>
+        <div class="succ-title" id="succTitle">Welcome!</div>
+        <p class="succ-sub" id="succSub">Your account is ready.</p>
+        <div class="upill">
+          <div class="upill-av" id="succAv">R</div>
+          <div><div class="upill-name" id="succName"></div><div class="upill-role" id="succRole"></div></div>
+        </div>
+        <button class="btn-dash" onclick="goToDashboard()">Go to Dashboard →</button>
+      </div>
+
+      <!-- LOGIN -->
+      <div id="loginForm">
+        <div class="alert-err" id="loginAlert">❌ Invalid email or password. Please try again.</div>
+        <div class="fg"><label>Email Address</label><input type="email" id="lEmail" placeholder="you@example.com"/><div class="ferr" id="lEmailErr">Enter a valid email.</div></div>
+        <div class="fg"><label>Password</label>
+          <div class="pw-wrap"><input type="password" id="lPass" placeholder="Your password"/><button class="tpw" onclick="tpw('lPass',this)" tabindex="-1">👁️</button></div>
+          <div class="ferr" id="lPassErr">Password required.</div>
+        </div>
+        <div style="text-align:right;margin-bottom:16px;"><a style="font-size:13px;color:var(--g2);font-weight:600;cursor:pointer;" onclick="openForgotPassword()">Forgot password?</a></div>
+        <button class="btn-sub" onclick="doLogin()">Sign In →</button>
+        <div class="ffoot">No account? <a onclick="switchTab('register')">Create one free</a></div>
+      </div>
+
+      <!-- REGISTER -->
+      <div id="regForm" style="display:none;">
+        <div class="alert-err" id="regAlert"></div>
+        <div style="font-size:13px;font-weight:600;color:#374151;margin-bottom:10px;">I am registering as:</div>
+        <div class="role-sel">
+          <div class="role-card sel" id="rF" onclick="selRole('farmer')"><div class="rc-icon">👨‍🌾</div><div class="rc-title">Farmer</div><div class="rc-sub">Sell my harvest</div></div>
+          <div class="role-card" id="rB" onclick="selRole('buyer')"><div class="rc-icon">🏢</div><div class="rc-title">Buyer</div><div class="rc-sub">Purchase crops</div></div>
+        </div>
+        <div class="form-row">
+          <div class="fg"><label>First Name</label><input type="text" id="rFirst" placeholder="e.g. Raju"/><div class="ferr" id="rFErr">Required.</div></div>
+          <div class="fg"><label>Last Name</label><input type="text" id="rLast" placeholder="e.g. Reddy"/><div class="ferr" id="rLErr">Required.</div></div>
+        </div>
+        <div class="fg"><label>Email Address</label><input type="email" id="rEmail" placeholder="you@example.com"/><div class="ferr" id="rEErr">Enter a valid email.</div></div>
+        <div class="fg"><label>Mobile Number</label><input type="tel" id="rMob" placeholder="+91 98765 43210"/><div class="ferr" id="rMErr">Enter valid mobile number.</div></div>
+        <div id="farmerF">
+          <div class="form-row">
+            <div class="fg"><label>District</label>
+              <select id="rDist"><option value="">Select district</option>
+                <option>Guntur</option><option>Krishna</option><option>Kurnool</option><option>Nellore</option>
+                <option>Prakasam</option><option>Chittoor</option><option>Vizianagaram</option><option>Visakhapatnam</option>
+                <option>East Godavari</option><option>West Godavari</option><option>Anantapur</option><option>Kadapa</option>
+                <option>Nizamabad</option><option>Warangal</option><option>Khammam</option><option>Karimnagar</option>
+              </select>
+              <div class="ferr" id="rDErr">Select a district.</div>
+            </div>
+            <div class="fg"><label>Land Area (Acres)</label><input type="number" id="rLand" placeholder="e.g. 5" min="0"/></div>
+          </div>
+        </div>
+        <div id="buyerF" style="display:none;">
+          <div class="fg"><label>Company / Business Name</label><input type="text" id="rComp" placeholder="e.g. Sri Lakshmi Traders"/></div>
+        </div>
+        <div class="fg"><label>Password</label>
+          <div class="pw-wrap"><input type="password" id="rPass" placeholder="Create a strong password" oninput="chkStr(this.value)"/><button class="tpw" onclick="tpw('rPass',this)" tabindex="-1">👁️</button></div>
+          <div class="str-bar"><div class="str-seg" id="s1"></div><div class="str-seg" id="s2"></div><div class="str-seg" id="s3"></div><div class="str-seg" id="s4"></div></div>
+          <div class="str-lbl" id="strLbl"></div>
+          <div class="ferr" id="rPErr">Minimum 8 characters.</div>
+        </div>
+        <div class="fg"><label>Confirm Password</label>
+          <div class="pw-wrap"><input type="password" id="rConf" placeholder="Re-enter password"/><button class="tpw" onclick="tpw('rConf',this)" tabindex="-1">👁️</button></div>
+          <div class="ferr" id="rCErr">Passwords do not match.</div>
+        </div>
+        <div class="terms"><input type="checkbox" id="terms"/><label for="terms">I agree to the <a href="#" onclick="openModal('terms')">Terms of Service</a> and <a href="#" onclick="openModal('privacy')">Privacy Policy</a> of Rytheraju</label></div>
+        <div class="ferr" id="tErr" style="margin-top:-10px;margin-bottom:12px;">Please accept the terms.</div>
+        <button class="btn-sub" onclick="doRegister()">Create Account →</button>
+        <div class="ffoot">Already registered? <a onclick="switchTab('login')">Sign in</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DASHBOARD ══ -->
+<div class="dashboard" id="dashboard">
+  <nav class="dash-nav">
+    <div class="dash-brand" onclick="goToLanding()">🌿 Rytheraju</div>
+    <div class="dash-user">
+      <div class="dash-av" id="dAv"></div>
+      <div><div class="dash-uname" id="dName"></div><div class="dash-role" id="dRole"></div></div>
+    </div>
+  </nav>
+
+  <!-- Sidebar + Content layout -->
+  <div style="display:flex;min-height:calc(100vh - 68px);">
+
+    <!-- Sidebar -->
+    <aside id="sidebar" style="width:220px;background:#fff;border-right:1.5px solid var(--border);padding:24px 0;flex-shrink:0;position:sticky;top:68px;height:calc(100vh - 68px);overflow-y:auto;">
+      <div style="padding:0 16px 20px;border-bottom:1px solid var(--border);margin-bottom:12px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="dash-av" id="sideAv" style="width:42px;height:42px;font-size:16px;"></div>
+          <div>
+            <div style="font-weight:700;font-size:14px;color:var(--g1)" id="sideName"></div>
+            <div style="font-size:11px;color:var(--muted)" id="sideRole"></div>
+          </div>
+        </div>
+      </div>
+      <button class="side-tab active" id="stHome" onclick="switchDashTab('home')">🏠 &nbsp;Home</button>
+      <button class="side-tab" id="stBrowse" onclick="switchDashTab('browse')">🛒 &nbsp;Browse Crops</button>
+      <button class="side-tab" id="stPost" onclick="switchDashTab('post')">➕ &nbsp;Post Crop</button>
+      <button class="side-tab" id="stMyListings" onclick="switchDashTab('mylistings')">📦 &nbsp;My Listings</button>
+      <button class="side-tab" id="stMyBids" onclick="switchDashTab('mybids')">🏷️ &nbsp;My Bids</button>
+      <button class="side-tab" id="stPrices" onclick="switchDashTab('prices')">📊 &nbsp;Market Prices</button>
+      <button class="side-tab" id="stListings" onclick="switchDashTab('listings')">🌾 &nbsp;Listings</button>
+      <button class="side-tab" id="stProfile" onclick="switchDashTab('profile')">👤 &nbsp;My Profile</button>
+      <div style="border-top:1px solid var(--border);margin:12px 16px;"></div>
+      <button class="side-tab" onclick="logout()" style="color:#dc2626;">🚪 &nbsp;Sign Out</button>
+    </aside>
+
+    <!-- Main content -->
+    <div style="flex:1;padding:36px 4%;overflow-y:auto;background:#f8faf9;">
+
+      <!-- HOME TAB -->
+      <div id="tabHome">
+        <div class="dash-welcome">
+          <h2 id="dWelcome">Welcome! 👋</h2>
+          <p id="dSub"></p>
+        </div>
+        <div class="dash-stats" id="dStats"></div>
+        <div class="dash-sec-title">📊 Today's Key Market Prices</div>
+        <div class="dash-price-wrap">
+          <input class="price-search" id="dashPriceSearch" placeholder="🔍 Search commodity..." oninput="renderDashPrices()" style="margin-bottom:16px;max-width:300px;"/>
+          <div style="overflow-x:auto;">
+            <table class="dp-table"><thead><tr><th>Commodity</th><th>Modal ₹/Qtl</th><th>Min</th><th>Max</th><th>Trend</th></tr></thead>
+            <tbody id="dashPriceBody"></tbody></table>
+          </div>
+        </div>
+        <div class="dash-sec-title" id="dListTitle">Available Crop Listings</div>
+        <div class="crop-grid" id="cropGrid"></div>
+      </div>
+
+      <!-- PRICES TAB -->
+      <div id="tabPrices" style="display:none;">
+        <div class="dash-welcome">
+          <h2>📊 Market Prices</h2>
+          <p style="color:var(--muted);font-size:14px;">Mandi wholesale prices · <span id="priceDate"></span> · ₹ per Quintal (100 kg) &nbsp;
+            <span style="background:#fef9c3;color:#92400e;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px;border:1px solid #fcd34d;">⚠️ Reference prices — not live API data</span>
+          </p>
+        </div>
+        <div class="filter-tabs" style="margin-bottom:16px;">
+          <button class="ftab active" id="dpAll" onclick="filterDashPrices('all',this)">All</button>
+          <button class="ftab" id="dpVeg" onclick="filterDashPrices('vegetable',this)">🥦 Vegetables</button>
+          <button class="ftab" id="dpFr"  onclick="filterDashPrices('fruit',this)">🍎 Fruits</button>
+          <button class="ftab" id="dpGr"  onclick="filterDashPrices('grain',this)">🌾 Grains &amp; Pulses</button>
+          <button class="ftab" id="dpSp"  onclick="filterDashPrices('spice',this)">🌶️ Spices</button>
+        </div>
+        <div style="margin-bottom:16px;">
+          <input class="price-search" id="dashPriceSearch2" placeholder="🔍 Search commodity..." oninput="renderDashPricesTab()" style="max-width:340px;"/>
+        </div>
+        <div style="background:#fff;border-radius:14px;border:1.5px solid var(--border);overflow:hidden;">
+          <div style="overflow-x:auto;">
+            <table class="price-table">
+              <thead><tr><th>Commodity</th><th>Unit</th><th>Min ₹</th><th>Max ₹</th><th>Modal ₹</th><th>Change</th><th>Market</th></tr></thead>
+              <tbody id="dashPriceBodyFull"></tbody>
+            </table>
+          </div>
+        </div>
+        <p style="font-size:12px;color:var(--muted);margin-top:12px;">* 1 Quintal = 100 kg. Retail kg price = Modal ÷ 100. Prices vary by quality &amp; market conditions.</p>
+      </div>
+
+      <!-- LISTINGS TAB -->
+      <div id="tabListings" style="display:none;">
+        <div class="dash-welcome">
+          <h2 id="listTabTitle">🌾 Listings</h2>
+          <p style="color:var(--muted);font-size:14px;" id="listTabSub"></p>
+        </div>
+        <div class="crop-grid" id="cropGrid2"></div>
+      </div>
+
+      <!-- PROFILE TAB -->
+      <div id="tabProfile" style="display:none;">
+        <div class="dash-welcome"><h2>👤 My Profile</h2><p style="color:var(--muted);font-size:14px;">Your account details</p></div>
+        <div style="max-width:560px;">
+          <div style="background:#fff;border-radius:16px;border:1.5px solid var(--border);padding:28px;margin-bottom:20px;">
+            <div style="display:flex;align-items:center;gap:18px;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid var(--border);">
+              <div class="dash-av" id="profAv" style="width:64px;height:64px;font-size:26px;background:var(--g2);"></div>
+              <div>
+                <div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--g1)" id="profName"></div>
+                <div style="font-size:13px;color:var(--muted);margin-top:4px;" id="profRoleBadge"></div>
+                <div style="font-size:12px;color:var(--muted);margin-top:2px;" id="profJoined"></div>
+              </div>
+            </div>
+            <div id="profFields"></div>
+          </div>
+
+          <div style="background:#fff;border-radius:16px;border:1.5px solid var(--border);padding:24px;margin-bottom:20px;">
+            <div style="font-weight:700;font-size:15px;color:var(--g1);margin-bottom:16px;">🔒 Change Password</div>
+            <div class="fg"><label>Current Password</label><div class="pw-wrap"><input type="password" id="curPw" placeholder="Enter current password"/><button class="tpw" onclick="tpw('curPw',this)" tabindex="-1">👁️</button></div></div>
+            <div class="fg"><label>New Password</label><div class="pw-wrap"><input type="password" id="newPw" placeholder="New password (min 8 chars)"/><button class="tpw" onclick="tpw('newPw',this)" tabindex="-1">👁️</button></div></div>
+            <div class="fg"><label>Confirm New Password</label><div class="pw-wrap"><input type="password" id="confPw" placeholder="Re-enter new password"/><button class="tpw" onclick="tpw('confPw',this)" tabindex="-1">👁️</button></div></div>
+            <div class="ferr" id="pwChangeErr" style="margin-bottom:10px;"></div>
+            <div id="pwChangeOk" style="display:none;background:#f0fdf4;border:1px solid #86efac;color:var(--g2);border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:10px;">✅ Password updated successfully!</div>
+            <button class="btn-sub" style="width:auto;padding:10px 28px;" onclick="changePassword()">Update Password</button>
+          </div>
+
+          <div style="background:#fff;border-radius:16px;border:1.5px solid #fecaca;padding:24px;">
+            <div style="font-weight:700;font-size:15px;color:#dc2626;margin-bottom:8px;">⚠️ Sign Out</div>
+            <p style="font-size:13px;color:var(--muted);margin-bottom:16px;">You will be logged out of your Rytheraju account on this device.</p>
+            <button onclick="logout()" style="background:#dc2626;color:#fff;border:none;border-radius:10px;padding:10px 28px;font-weight:700;font-size:14px;cursor:pointer;font-family:'DM Sans',sans-serif;">🚪 Sign Out</button>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- BROWSE CROPS TAB -->
+      <div id="tabBrowse" style="display:none;">
+        <div class="dash-welcome">
+          <h2>🛒 Browse Crops</h2>
+          <p style="color:var(--muted);font-size:14px;" id="browseSubtitle">Fresh listings from farmers across AP &amp; Telangana</p>
+        </div>
+        <div style="display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap;">
+          <input class="price-search" id="browseSearch" placeholder="🔍 Search crop, location..." oninput="loadBrowseListings()" style="flex:1;min-width:200px;"/>
+          <select id="browseDistrict" onchange="loadBrowseListings()" style="border:1.5px solid var(--border);border-radius:10px;padding:10px 14px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;">
+            <option value="">All Districts</option>
+            <option>Guntur</option><option>Krishna</option><option>Kurnool</option><option>Nellore</option>
+            <option>Prakasam</option><option>Chittoor</option><option>Vizianagaram</option><option>Visakhapatnam</option>
+            <option>East Godavari</option><option>West Godavari</option><option>Anantapur</option><option>Kadapa</option>
+          </select>
+        </div>
+        <div id="browseListings" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;"></div>
+      </div>
+
+      <!-- POST CROP TAB (Farmers only) -->
+      <div id="tabPost" style="display:none;">
+        <div class="dash-welcome">
+          <h2>➕ Post a Crop Listing</h2>
+          <p style="color:var(--muted);font-size:14px;">List your crop for buyers to find and bid on</p>
+        </div>
+        <div style="max-width:560px;">
+          <div id="postSuccess" style="display:none;background:#f0fdf4;border:1.5px solid #86efac;border-radius:16px;padding:28px;text-align:center;margin-bottom:20px;">
+            <div style="font-size:48px;margin-bottom:12px;">✅</div>
+            <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--g1);margin-bottom:8px;">Listing Posted!</div>
+            <p style="color:var(--muted);font-size:14px;margin-bottom:16px;">Buyers can now find and bid on your crop.</p>
+            <button onclick="switchDashTab('mylistings')" class="btn-sub" style="width:auto;padding:10px 28px;">View My Listings →</button>
+          </div>
+          <div id="postForm" style="background:#fff;border-radius:16px;border:1.5px solid var(--border);padding:28px;">
+            <!-- Photo Upload -->
+            <div class="fg" style="margin-bottom:20px;">
+              <label>📸 Crop Photos <span style="color:var(--muted);font-weight:400;">(up to 3, optional)</span></label>
+              <div id="photoPreview" style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px;min-height:0;"></div>
+              <div onclick="document.getElementById('photoInput').click()"
+                style="border:2px dashed #86efac;border-radius:10px;padding:16px;text-align:center;cursor:pointer;background:#f0fdf4;color:var(--g2);font-size:13px;font-weight:600;transition:.2s;"
+                onmouseover="this.style.background='#dcfce7'" onmouseout="this.style.background='#f0fdf4'"
+                id="photoDropzone">
+                📷 Click to add photos
+              </div>
+              <input type="file" id="photoInput" accept="image/*" multiple style="display:none" onchange="handlePhotoUpload(event)"/>
+            </div>
+            <div class="fg"><label>Crop Name *</label><input type="text" id="pCrop" placeholder="e.g. Rice, Tomato, Cotton"/><div class="ferr" id="pCropErr">Required.</div></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+              <div class="fg"><label>Quantity (Quintals) *</label><input type="number" id="pQty" placeholder="e.g. 50" min="0.1" step="0.1"/><div class="ferr" id="pQtyErr">Required.</div></div>
+              <div class="fg"><label>Price (₹/Quintal) *</label><input type="number" id="pPrice" placeholder="e.g. 2200" min="1"/><div class="ferr" id="pPriceErr">Required.</div></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+              <div class="fg"><label>Grade</label>
+                <select id="pGrade"><option value="A+">A+ (Best)</option><option value="A" selected>A (Good)</option><option value="B">B (Average)</option></select>
+              </div>
+              <div class="fg"><label>District *</label>
+                <select id="pDistrict"><option value="">Select district</option>
+                  <option>Guntur</option><option>Krishna</option><option>Kurnool</option><option>Nellore</option>
+                  <option>Prakasam</option><option>Chittoor</option><option>Vizianagaram</option><option>Visakhapatnam</option>
+                  <option>East Godavari</option><option>West Godavari</option><option>Anantapur</option><option>Kadapa</option>
+                </select>
+                <div class="ferr" id="pDistErr">Required.</div>
+              </div>
+            </div>
+            <div class="fg"><label>Village / Location *</label><input type="text" id="pLoc" placeholder="e.g. Tenali, Guntur"/><div class="ferr" id="pLocErr">Required.</div></div>
+            <div class="fg"><label>Description (optional)</label><textarea id="pDesc" rows="3" placeholder="Quality details, harvest date, transport available..." style="width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 13px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;resize:none;"></textarea></div>
+            <div class="alert-err" id="postErr"></div>
+            <button class="btn-sub" onclick="postListing()">📤 Post Listing</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MY LISTINGS TAB (Farmers) -->
+      <div id="tabMylistings" style="display:none;">
+        <div class="dash-welcome">
+          <h2>📦 My Listings</h2>
+          <p style="color:var(--muted);font-size:14px;">Manage your crop listings and view buyer bids</p>
+        </div>
+        <div style="margin-bottom:16px;">
+          <button onclick="switchDashTab('post')" class="btn-sub" style="width:auto;padding:10px 24px;font-size:13px;">➕ Post New Crop</button>
+        </div>
+        <div id="myListingsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;"></div>
+      </div>
+
+      <!-- MY BIDS TAB (Buyers) -->
+      <div id="tabMybids" style="display:none;">
+        <div class="dash-welcome">
+          <h2>🏷️ My Bids</h2>
+          <p style="color:var(--muted);font-size:14px;">Track bids you have placed on crop listings</p>
+        </div>
+        <div id="myBidsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px;"></div>
+      </div>
+
+
+    </div><!-- end main content -->
+  </div><!-- end flex -->
+</div>
+
+<script>
+// ─── PRICE DATA ──────────────────────────────────────────────────────────────
+const priceData = [
+  // VEGETABLES
+  {cat:'vegetable',name:'Tomato',nameTE:'టమాటా',em:'🍅',min:400,max:1200,modal:800,prev:750,unit:'Qtl',market:'Guntur'},
+  {cat:'vegetable',name:'Onion',nameTE:'ఉల్లిపాయ',em:'🧅',min:600,max:1500,modal:1000,prev:1100,unit:'Qtl',market:'Kurnool'},
+  {cat:'vegetable',name:'Potato',nameTE:'బంగాళాదుంప',em:'🥔',min:800,max:1800,modal:1200,prev:1150,unit:'Qtl',market:'Nellore'},
+  {cat:'vegetable',name:'Brinjal',nameTE:'వంకాయ',em:'🍆',min:300,max:900,modal:600,prev:550,unit:'Qtl',market:'Guntur'},
+  {cat:'vegetable',name:'Capsicum',nameTE:'క్యాప్సికమ్',em:'🫑',min:800,max:2200,modal:1500,prev:1600,unit:'Qtl',market:'Krishna'},
+  {cat:'vegetable',name:'Cauliflower',nameTE:'కాలీఫ్లవర్',em:'🥦',min:400,max:1200,modal:700,prev:700,unit:'Qtl',market:'Vizianagaram'},
+  {cat:'vegetable',name:'Cabbage',nameTE:'క్యాబేజీ',em:'🥬',min:300,max:800,modal:500,prev:480,unit:'Qtl',market:'East Godavari'},
+  {cat:'vegetable',name:'Lady Finger',nameTE:'బెండకాయ',em:'🟢',min:600,max:1800,modal:1100,prev:1000,unit:'Qtl',market:'Prakasam'},
+  {cat:'vegetable',name:'Bitter Gourd',nameTE:'కాకరకాయ',em:'🫛',min:800,max:2000,modal:1400,prev:1300,unit:'Qtl',market:'Guntur'},
+  {cat:'vegetable',name:'Bottle Gourd',nameTE:'సొరకాయ',em:'🥒',min:300,max:800,modal:500,prev:520,unit:'Qtl',market:'Krishna'},
+  {cat:'vegetable',name:'Ridge Gourd',nameTE:'బీరకాయ',em:'🫑',min:400,max:1000,modal:700,prev:700,unit:'Qtl',market:'Nellore'},
+  {cat:'vegetable',name:'Green Chilli',nameTE:'పచ్చి మిర్చి',em:'🌿',min:1000,max:4000,modal:2500,prev:2200,unit:'Qtl',market:'Guntur'},
+  {cat:'vegetable',name:'Drumstick',nameTE:'మునగకాయ',em:'🌱',min:2000,max:5000,modal:3500,prev:3200,unit:'Qtl',market:'Kurnool'},
+  {cat:'vegetable',name:'Cluster Beans',nameTE:'గోరుచిక్కుడు',em:'🫘',min:500,max:1500,modal:1000,prev:950,unit:'Qtl',market:'Chittoor'},
+  {cat:'vegetable',name:'Carrot',nameTE:'క్యారెట్',em:'🥕',min:600,max:1600,modal:1100,prev:1200,unit:'Qtl',market:'Vizianagaram'},
+  {cat:'vegetable',name:'Spinach',nameTE:'పాలకూర',em:'🥬',min:400,max:1000,modal:700,prev:680,unit:'Qtl',market:'Warangal'},
+  {cat:'vegetable',name:'Fenugreek',nameTE:'మెంతికూర',em:'🌿',min:500,max:1400,modal:900,prev:880,unit:'Qtl',market:'Guntur'},
+  {cat:'vegetable',name:'Cucumber',nameTE:'దోసకాయ',em:'🥒',min:300,max:900,modal:600,prev:600,unit:'Qtl',market:'Krishna'},
+  {cat:'vegetable',name:'Pumpkin',nameTE:'గుమ్మడికాయ',em:'🎃',min:300,max:800,modal:500,prev:480,unit:'Qtl',market:'Nellore'},
+  {cat:'vegetable',name:'Raw Banana',nameTE:'పచ్చి అరటి',em:'🍌',min:1000,max:2500,modal:1800,prev:1700,unit:'Qtl',market:'West Godavari'},
+  {cat:'vegetable',name:'Garlic',nameTE:'వెల్లుల్లి',em:'🧄',min:3000,max:8000,modal:5000,prev:5200,unit:'Qtl',market:'Kurnool'},
+  {cat:'vegetable',name:'Ginger',nameTE:'అల్లం',em:'🫚',min:4000,max:12000,modal:8000,prev:7500,unit:'Qtl',market:'Guntur'},
+  {cat:'vegetable',name:'Sweet Potato',nameTE:'చిలకడదుంప',em:'🍠',min:800,max:2000,modal:1400,prev:1350,unit:'Qtl',market:'Vizianagaram'},
+  {cat:'vegetable',name:'Taro Root',nameTE:'చేమదుంప',em:'🟤',min:600,max:1600,modal:1100,prev:1050,unit:'Qtl',market:'East Godavari'},
+
+  // FRUITS
+  {cat:'fruit',name:'Banana',nameTE:'అరటిపండు',em:'🍌',min:800,max:2200,modal:1500,prev:1400,unit:'Qtl',market:'West Godavari'},
+  {cat:'fruit',name:'Mango',nameTE:'మామిడిపండు',em:'🥭',min:2000,max:8000,modal:5000,prev:4500,unit:'Qtl',market:'Krishna'},
+  {cat:'fruit',name:'Watermelon',nameTE:'పుచ్చకాయ',em:'🍉',min:400,max:1200,modal:800,prev:750,unit:'Qtl',market:'Kurnool'},
+  {cat:'fruit',name:'Papaya',nameTE:'బొప్పాయి',em:'🍈',min:600,max:1800,modal:1200,prev:1100,unit:'Qtl',market:'Guntur'},
+  {cat:'fruit',name:'Guava',nameTE:'జామపండు',em:'🍐',min:1000,max:3000,modal:2000,prev:1900,unit:'Qtl',market:'Nellore'},
+  {cat:'fruit',name:'Pomegranate',nameTE:'దానిమ్మ',em:'🍎',min:3000,max:10000,modal:6000,prev:5800,unit:'Qtl',market:'Anantapur'},
+  {cat:'fruit',name:'Sapota (Chikoo)',nameTE:'సపోట',em:'🟤',min:1500,max:4000,modal:2800,prev:2600,unit:'Qtl',market:'Krishna'},
+  {cat:'fruit',name:'Lemon',nameTE:'నిమ్మకాయ',em:'🍋',min:5000,max:23600,modal:8000,prev:7500,unit:'Qtl',market:'Guntur'},
+  {cat:'fruit',name:'Orange',nameTE:'నారింజ',em:'🍊',min:2000,max:6000,modal:4000,prev:4200,unit:'Qtl',market:'Vizianagaram'},
+  {cat:'fruit',name:'Grapes',nameTE:'ద్రాక్ష',em:'🍇',min:2000,max:8000,modal:5000,prev:5200,unit:'Qtl',market:'Anantapur'},
+  {cat:'fruit',name:'Pineapple',nameTE:'అనానాస',em:'🍍',min:1500,max:4000,modal:2500,prev:2300,unit:'Qtl',market:'Vizianagaram'},
+  {cat:'fruit',name:'Coconut',nameTE:'కొబ్బరికాయ',em:'🥥',min:1800,max:4500,modal:3000,prev:2800,unit:'Qtl',market:'West Godavari'},
+  {cat:'fruit',name:'Custard Apple',nameTE:'సీతాఫలం',em:'💚',min:2000,max:6000,modal:4000,prev:3800,unit:'Qtl',market:'Prakasam'},
+  {cat:'fruit',name:'Jackfruit',nameTE:'పనసపండు',em:'🍈',min:1000,max:3000,modal:2000,prev:1900,unit:'Qtl',market:'East Godavari'},
+  {cat:'fruit',name:'Tamarind',nameTE:'చింతపండు',em:'🟤',min:4000,max:12000,modal:8000,prev:7600,unit:'Qtl',market:'Kurnool'},
+  {cat:'fruit',name:'Amla (Gooseberry)',nameTE:'ఉసిరికాయ',em:'🟢',min:1000,max:3500,modal:2200,prev:2000,unit:'Qtl',market:'Prakasam'},
+
+  // GRAINS & PULSES
+  {cat:'grain',name:'Rice (Sona Masuri)',nameTE:'సోనా మసూరి',em:'🌾',min:1800,max:2600,modal:2200,prev:2150,unit:'Qtl',market:'Guntur'},
+  {cat:'grain',name:'Rice (BPT)',nameTE:'BPT బియ్యం',em:'🍚',min:1700,max:2400,modal:2100,prev:2050,unit:'Qtl',market:'Krishna'},
+  {cat:'grain',name:'Paddy (Raw)',nameTE:'ముడి వడ్లు',em:'🌾',min:1800,max:2200,modal:2015,prev:2000,unit:'Qtl',market:'West Godavari'},
+  {cat:'grain',name:'Maize',nameTE:'మొక్కజొన్న',em:'🌽',min:1500,max:2100,modal:1800,prev:1780,unit:'Qtl',market:'Kurnool'},
+  {cat:'grain',name:'Groundnut',nameTE:'వేరుశెనగ',em:'🥜',min:4800,max:6200,modal:5500,prev:5400,unit:'Qtl',market:'Anantapur'},
+  {cat:'grain',name:'Soybean',nameTE:'సోయాబీన్',em:'🫘',min:3800,max:4800,modal:4300,prev:4200,unit:'Qtl',market:'Khammam'},
+  {cat:'grain',name:'Sunflower',nameTE:'పొద్దుతిరుగుడు',em:'🌻',min:4000,max:5500,modal:4800,prev:4700,unit:'Qtl',market:'Kurnool'},
+  {cat:'grain',name:'Cotton',nameTE:'పత్తి',em:'🏵️',min:6000,max:7500,modal:6800,prev:6650,unit:'Qtl',market:'Guntur'},
+  {cat:'grain',name:'Toor Dal',nameTE:'కంది పప్పు',em:'🟡',min:8000,max:10500,modal:9200,prev:9000,unit:'Qtl',market:'Kurnool'},
+  {cat:'grain',name:'Moong Dal',nameTE:'పెసర పప్పు',em:'🟢',min:7000,max:9500,modal:8200,prev:8000,unit:'Qtl',market:'Nellore'},
+  {cat:'grain',name:'Urad Dal',nameTE:'మినుము',em:'⚫',min:6500,max:9000,modal:7500,prev:7400,unit:'Qtl',market:'Kadapa'},
+  {cat:'grain',name:'Chana Dal',nameTE:'శనగ పప్పు',em:'🟡',min:5500,max:8000,modal:6800,prev:6700,unit:'Qtl',market:'Guntur'},
+  {cat:'grain',name:'Wheat',nameTE:'గోధుమ',em:'🌾',min:2100,max:2600,modal:2350,prev:2300,unit:'Qtl',market:'Karimnagar'},
+  {cat:'grain',name:'Jowar',nameTE:'జొన్న',em:'🌾',min:2000,max:2800,modal:2400,prev:2380,unit:'Qtl',market:'Kurnool'},
+  {cat:'grain',name:'Bajra',nameTE:'సజ్జ',em:'🌾',min:1800,max:2500,modal:2100,prev:2050,unit:'Qtl',market:'Anantapur'},
+
+  // SPICES
+  {cat:'spice',name:'Red Chilli (Dry)',nameTE:'ఎర్ర మిర్చి',em:'🌶️',min:10000,max:18000,modal:12500,prev:12000,unit:'Qtl',market:'Guntur'},
+  {cat:'spice',name:'Turmeric',nameTE:'పసుపు',em:'🟡',min:7000,max:12000,modal:9200,prev:9000,unit:'Qtl',market:'Nizamabad'},
+  {cat:'spice',name:'Coriander',nameTE:'కొత్తిమీర',em:'🌿',min:5000,max:9000,modal:7000,prev:6800,unit:'Qtl',market:'Guntur'},
+  {cat:'spice',name:'Cumin (Jeera)',nameTE:'జీలకర్ర',em:'🟤',min:15000,max:25000,modal:20000,prev:19500,unit:'Qtl',market:'Kurnool'},
+  {cat:'spice',name:'Sesame (Til)',nameTE:'నువ్వులు',em:'⚪',min:8000,max:14000,modal:11000,prev:10800,unit:'Qtl',market:'Prakasam'},
+  {cat:'spice',name:'Fenugreek (Methi)',nameTE:'మెంతులు',em:'🟤',min:4000,max:8000,modal:6000,prev:5800,unit:'Qtl',market:'Kurnool'},
+  {cat:'spice',name:'Mustard',nameTE:'ఆవాలు',em:'🟡',min:4500,max:7000,modal:5800,prev:5700,unit:'Qtl',market:'Guntur'},
+  {cat:'spice',name:'Black Pepper',nameTE:'మిరియాలు',em:'⚫',min:30000,max:55000,modal:42000,prev:41000,unit:'Qtl',market:'Visakhapatnam'},
+];
+
+const marketCrops = [
+  {id:1,name:'Rice (Sona Masuri)',price:2200,qty:50,location:'Guntur',farmer:'Raju Reddy',grade:'A',img:'🌾'},
+  {id:2,name:'Red Chilli',price:12500,qty:20,location:'Guntur',farmer:'Lakshmi Devi',grade:'A+',img:'🌶️'},
+  {id:3,name:'Cotton',price:6800,qty:80,location:'Kurnool',farmer:'Venkata Rao',grade:'B',img:'🏵️'},
+  {id:4,name:'Groundnut',price:5500,qty:35,location:'Nellore',farmer:'Srinivas',grade:'A',img:'🥜'},
+  {id:5,name:'Maize',price:1800,qty:100,location:'Kurnool',farmer:'Anand Kumar',grade:'A',img:'🌽'},
+  {id:6,name:'Turmeric',price:9200,qty:15,location:'Nizamabad',farmer:'Padma Rani',grade:'A+',img:'🟡'},
+];
+
+// ─── STATE ───────────────────────────────────────────────────────────────────
+let curRole = 'farmer';
+let curUser = null;
+let currentFilter = 'all';
+
+// ─── BACKEND API CONFIG ───────────────────────────────────────────────────────
+const API_BASE = '/api';
+
+// ─── SESSION (token stored in localStorage) ───────────────────────────────────
+function getToken()       { return localStorage.getItem('rb_token'); }
+function saveToken(t)     { localStorage.setItem('rb_token', t); }
+function clearToken()     { localStorage.removeItem('rb_token'); }
+function getSession()     { try{ return JSON.parse(localStorage.getItem('rb_session')||'null'); }catch(e){ return null; } }
+function saveSession(u)   { localStorage.setItem('rb_session', JSON.stringify(u)); }
+function clearSession()   { localStorage.removeItem('rb_session'); clearToken(); }
+
+// ─── API HELPER ───────────────────────────────────────────────────────────────
+async function api(endpoint, method='GET', body=null, auth=false) {
+  const headers = { 'Content-Type': 'application/json' };
+  if (auth) headers['Authorization'] = 'Bearer ' + getToken();
+  const opts = { method, headers };
+  if (body) opts.body = JSON.stringify(body);
+  const res  = await fetch(API_BASE + endpoint, opts);
+  const data = await res.json();
+  return { ok: res.ok, status: res.status, data };
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', async () => {
+  // Set today's date everywhere prices are shown
+  const today = new Date().toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+  ['priceDate','dashPriceDate','landingPriceDate'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.textContent = today;
+  });
+  // Try to load live mandi prices first
+  fetchLiveMandiPrices().then(success => {
+    if (success) {
+      renderPriceTable();
+      renderDashPrices();
+      // Add live badge to price sections
+      ['priceDate','dashPriceDate','landingPriceDate'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.parentElement) {
+          const badge = document.createElement('span');
+          badge.innerHTML = ' &nbsp;<span style="background:#dcfce7;color:#15803d;border-radius:20px;padding:2px 8px;font-size:11px;font-weight:700;">🟢 LIVE</span>';
+          el.parentElement.appendChild(badge);
+        }
+      });
+    } else {
+      renderPriceTable();
+    }
+  });
+  checkResetToken();
+  const token = getToken();
+  const sess  = getSession();
+  if (token && sess) {
+    // Verify token is still valid with backend
+    const { ok, data } = await api('/auth/me', 'GET', null, true);
+    if (ok) {
+      curUser = data.user;
+      curUser.name = curUser.first_name + ' ' + curUser.last_name;
+      saveSession(curUser);
+      showNavUser();
+    } else {
+      clearSession();
+    }
+  }
+});
+
+function showNavUser() {
+  if (!curUser) return;
+  document.getElementById('navLinks').style.display = 'none';
+  document.getElementById('navUser').style.display = 'flex';
+  const init = curUser.name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('navAv').textContent = init;
+  document.getElementById('navUname').textContent = curUser.name.split(' ')[0];
+}
+
+// ─── PRICE TABLE ─────────────────────────────────────────────────────────────
+function filterPrices(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.ftab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // Try to load live mandi prices first
+  fetchLiveMandiPrices().then(success => {
+    if (success) {
+      renderPriceTable();
+      renderDashPrices();
+      // Add live badge to price sections
+      ['priceDate','dashPriceDate','landingPriceDate'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el && el.parentElement) {
+          const badge = document.createElement('span');
+          badge.innerHTML = ' &nbsp;<span style="background:#dcfce7;color:#15803d;border-radius:20px;padding:2px 8px;font-size:11px;font-weight:700;">🟢 LIVE</span>';
+          el.parentElement.appendChild(badge);
+        }
+      });
+    } else {
+      renderPriceTable();
+    }
+  });
+  checkResetToken();
+}
+
+function renderPriceTable() {
+  if (usingLivePrices && liveMandiData) {
+    renderLivePriceTable(document.getElementById('priceSearch')?.value||'', currentFilter);
+    return;
+  }
+  const q = (document.getElementById('priceSearch')?.value||'').toLowerCase();
+  const rows = priceData.filter(p =>
+    (currentFilter==='all' || p.cat===currentFilter) &&
+    (p.name.toLowerCase().includes(q) || p.nameTE.includes(q) || p.market.toLowerCase().includes(q))
+  );
+  const body = document.getElementById('priceBody');
+  if (!body) return;
+  if (rows.length===0) { body.innerHTML=`<tr><td colspan="7" class="no-results">No results found.</td></tr>`; return; }
+  body.innerHTML = rows.map(p => {
+    const diff = p.modal - p.prev;
+    const pct = ((diff/p.prev)*100).toFixed(1);
+    const cls = diff>0?'price-up':diff<0?'price-down':'price-neu';
+    const arrow = diff>0?'▲':diff<0?'▼':'─';
+    return `<tr>
+      <td><div class="crop-cell"><span class="crop-em">${p.em}</span><div><div style="font-weight:600">${p.name}</div><div style="font-size:11px;color:#6b7280">${p.nameTE}</div></div></div></td>
+      <td style="color:#6b7280;font-size:12px">${p.unit}</td>
+      <td>₹${p.min.toLocaleString()}</td>
+      <td>₹${p.max.toLocaleString()}</td>
+      <td style="font-weight:700;color:#0f4c2a">₹${p.modal.toLocaleString()}</td>
+      <td class="${cls}">${arrow} ${Math.abs(pct)}%<span class="trend-arrow"></span></td>
+      <td style="font-size:12px;color:#6b7280">📍 ${p.market}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderDashPrices() {
+  if (usingLivePrices && liveMandiData) {
+    renderLiveDashPrices(document.getElementById('dashPriceSearch')?.value||'');
+    return;
+  }
+  const q = (document.getElementById('dashPriceSearch')?.value||'').toLowerCase();
+  const rows = priceData.filter(p => p.name.toLowerCase().includes(q) || p.nameTE.includes(q)).slice(0, 20);
+  const body = document.getElementById('dashPriceBody');
+  if (!body) return;
+  body.innerHTML = rows.map(p => {
+    const diff = p.modal - p.prev;
+    const pct = ((diff/p.prev)*100).toFixed(1);
+    const cls = diff>0?'price-up':diff<0?'price-down':'price-neu';
+    const arrow = diff>0?'▲':diff<0?'▼':'─';
+    return `<tr>
+      <td><div class="crop-cell"><span style="font-size:18px">${p.em}</span><span style="font-weight:600">${p.name}</span></div></td>
+      <td style="font-weight:700;color:#0f4c2a">₹${p.modal.toLocaleString()}</td>
+      <td style="color:#6b7280">₹${p.min.toLocaleString()}</td>
+      <td style="color:#6b7280">₹${p.max.toLocaleString()}</td>
+      <td class="${cls}">${arrow} ${Math.abs(pct)}%</td>
+    </tr>`;
+  }).join('');
+}
+
+// ─── AUTH ─────────────────────────────────────────────────────────────────────
+function openAuth(tab) {
+  document.getElementById('authOverlay').classList.add('active');
+  document.getElementById('succScreen').classList.remove('show');
+  document.getElementById('loginAlert').classList.remove('show');
+  switchTab(tab);
+}
+function closeAuth() { document.getElementById('authOverlay').classList.remove('active'); }
+function overlayClick(e) { if(e.target===document.getElementById('authOverlay')) closeAuth(); }
+
+function switchTab(t) {
+  document.getElementById('succScreen').classList.remove('show');
+  if(t==='login'){
+    document.getElementById('tLogin').classList.add('active');
+    document.getElementById('tReg').classList.remove('active');
+    document.getElementById('loginForm').style.display='';
+    document.getElementById('regForm').style.display='none';
+  } else {
+    document.getElementById('tReg').classList.add('active');
+    document.getElementById('tLogin').classList.remove('active');
+    document.getElementById('regForm').style.display='';
+    document.getElementById('loginForm').style.display='none';
+  }
+}
+
+function selRole(r) {
+  curRole = r;
+  document.getElementById('rF').classList.toggle('sel', r==='farmer');
+  document.getElementById('rB').classList.toggle('sel', r==='buyer');
+  document.getElementById('farmerF').style.display = r==='farmer'?'':'none';
+  document.getElementById('buyerF').style.display = r==='buyer'?'':'none';
+}
+
+function tpw(id, btn) {
+  const i = document.getElementById(id);
+  i.type = i.type==='password'?'text':'password';
+  btn.textContent = i.type==='password'?'👁️':'🙈';
+}
+
+function chkStr(pw) {
+  let s=0;
+  if(pw.length>=8)s++;
+  if(/[A-Z]/.test(pw))s++;
+  if(/[0-9]/.test(pw))s++;
+  if(/[^A-Za-z0-9]/.test(pw))s++;
+  ['s1','s2','s3','s4'].forEach((id,i)=>{
+    const el=document.getElementById(id); el.className='str-seg';
+    if(i<s) el.classList.add(['','weak','fair','good','strong'][s]);
+  });
+  const lbl=document.getElementById('strLbl');
+  lbl.textContent=pw.length?['','Weak','Fair','Good','Strong'][s]:'';
+  lbl.style.color=['','#ef4444','#f59e0b','#22c55e','#15803d'][s];
+}
+
+function v(id){ return (document.getElementById(id)?.value||'').trim(); }
+function se(id,show){ const el=document.getElementById(id); if(el) el.classList.toggle('show',show); }
+
+async function doLogin() {
+  const email=v('lEmail'), pass=v('lPass');
+  se('lEmailErr', !email||!/\S+@\S+\.\S+/.test(email));
+  se('lPassErr', !pass);
+  if(!email||!pass) return;
+
+  const btn = document.querySelector('#loginForm .btn-sub');
+  btn.textContent = 'Signing in...'; btn.disabled = true;
+  try {
+    const { ok, data } = await api('/auth/login', 'POST', { email, password: pass });
+    if (!ok) {
+      document.getElementById('loginAlert').textContent = '❌ ' + data.error;
+      document.getElementById('loginAlert').classList.add('show');
+      return;
+    }
+    document.getElementById('loginAlert').classList.remove('show');
+    saveToken(data.token);
+    curUser = data.user;
+    curUser.name = curUser.first_name + ' ' + curUser.last_name;
+    saveSession(curUser);
+    showSucc(false);
+  } catch(e) {
+    document.getElementById('loginAlert').textContent = '❌ Network error. Please try again.';
+    document.getElementById('loginAlert').classList.add('show');
+  } finally {
+    btn.textContent = 'Sign In →'; btn.disabled = false;
+  }
+}
+
+async function doRegister() {
+  const first=v('rFirst'),last=v('rLast'),email=v('rEmail'),mob=v('rMob');
+  const dist=v('rDist'),pass=v('rPass'),conf=v('rConf');
+  const agreed=document.getElementById('terms').checked;
+  se('rFErr',!first); se('rLErr',!last);
+  se('rEErr',!email||!/\S+@\S+\.\S+/.test(email));
+  se('rMErr',!/^\+?[\d\s\-]{10,}$/.test(mob));
+  se('rDErr',curRole==='farmer'&&!dist);
+  se('rPErr',pass.length<8); se('rCErr',pass!==conf);
+  se('tErr',!agreed);
+  if(!first||!last||!email||!/\S+@\S+\.\S+/.test(email)) return;
+  if(!/^\+?[\d\s\-]{10,}$/.test(mob)) return;
+  if(curRole==='farmer'&&!dist) return;
+  if(pass.length<8||pass!==conf||!agreed) return;
+
+  const btn = document.querySelector('#regForm .btn-sub');
+  btn.textContent = 'Creating account...'; btn.disabled = true;
+  try {
+    const { ok, data } = await api('/auth/register', 'POST', {
+      first_name: first, last_name: last,
+      email, mobile: mob, role: curRole, password: pass,
+      district:   curRole==='farmer' ? dist      : undefined,
+      land_acres: curRole==='farmer' ? v('rLand') : undefined,
+      company:    curRole==='buyer'  ? v('rComp') : undefined,
+    });
+    if (!ok) {
+      const al=document.getElementById('regAlert');
+      al.textContent='⚠️ '+data.error; al.classList.add('show'); return;
+    }
+    document.getElementById('regAlert').classList.remove('show');
+    saveToken(data.token);
+    curUser = data.user;
+    curUser.name = curUser.first_name + ' ' + curUser.last_name;
+    saveSession(curUser);
+    showSucc(true);
+  } catch(e) {
+    const al=document.getElementById('regAlert');
+    al.textContent='⚠️ Network error. Please try again.'; al.classList.add('show');
+  } finally {
+    btn.textContent = 'Create Account →'; btn.disabled = false;
+  }
+}
+
+function showSucc(isNew) {
+  const u=curUser;
+  const init=u.name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('succAv').textContent=init;
+  document.getElementById('succName').textContent=u.name;
+  document.getElementById('succRole').textContent=u.role==='farmer'?'🌾 Farmer':'🏢 Buyer';
+  document.getElementById('succTitle').textContent=isNew?'Account Created! 🎉':'Welcome Back!';
+  document.getElementById('succSub').textContent=isNew
+    ?`Your ${u.role} account is live. Start using Rytheraju now.`
+    :`Good to see you again, ${u.name.split(' ')[0]}!`;
+  document.getElementById('loginForm').style.display='none';
+  document.getElementById('regForm').style.display='none';
+  document.getElementById('succScreen').classList.add('show');
+  showNavUser();
+}
+
+// ─── DASHBOARD ────────────────────────────────────────────────────────────────
+function goToDashboard() {
+  closeAuth();
+  document.getElementById('landing').style.display='none';
+  document.getElementById('dashboard').classList.add('show');
+  buildDash();
+  switchDashTab('home');
+}
+
+let dashPriceFilter = 'all';
+
+function switchDashTab(tab) {
+  const allTabs = ['home','prices','listings','profile','browse','post','mylistings','mybids'];
+  allTabs.forEach(t => {
+    const panel = document.getElementById('tab'+t.charAt(0).toUpperCase()+t.slice(1));
+    const btn   = document.getElementById('st'+t.charAt(0).toUpperCase()+t.slice(1));
+    if(panel) panel.style.display = t===tab ? '' : 'none';
+    if(btn)   btn.classList.toggle('active', t===tab);
+  });
+  if(tab==='prices')     renderDashPricesTab();
+  if(tab==='listings')   buildListingsTab();
+  if(tab==='profile')    buildProfile();
+  if(tab==='browse')     loadBrowseListings();
+  if(tab==='mylistings') loadMyListings();
+  if(tab==='mybids')     loadMyBids();
+  if(tab==='post'){
+    document.getElementById('postForm').style.display='';
+    document.getElementById('postSuccess').style.display='none';
+    document.getElementById('postErr').classList.remove('show');
+    uploadedPhotos = [];
+    renderPhotoPreviews();
+  }
+}
+
+function buildDash() {
+  const u=curUser;
+  const init=u.name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+  // Nav
+  document.getElementById('dAv').textContent=init;
+  document.getElementById('dName').textContent=u.name;
+  document.getElementById('dRole').textContent=u.role==='farmer'?'🌾 Farmer':'🏢 Buyer';
+  // Sidebar
+  document.getElementById('sideAv').textContent=init;
+  document.getElementById('sideName').textContent=u.name;
+  document.getElementById('sideRole').textContent=u.role==='farmer'?'🌾 Farmer':'🏢 Buyer';
+  // Show/hide role-specific tabs
+  const isFarmer = u.role === 'farmer';
+  document.getElementById('stPost').style.display       = isFarmer ? '' : 'none';
+  document.getElementById('stMyListings').style.display = isFarmer ? '' : 'none';
+  document.getElementById('stMyBids').style.display     = isFarmer ? 'none' : '';
+  document.getElementById('stBrowse').style.display     = '';
+  // Home tab
+  document.getElementById('dWelcome').textContent=`Welcome, ${u.name.split(' ')[0]}! 👋`;
+  document.getElementById('dSub').textContent=u.role==='farmer'
+    ?`Farmer${u.district?' · '+u.district:''}  •  Joined: ${u.joined||'Today'}`
+    :`Buyer${u.company?' · '+u.company:''}  •  Joined: ${u.joined||'Today'}`;
+  const stats = u.role==='farmer'
+    ? [{icon:'📦',val:'2',lbl:'Active Listings'},{icon:'👁️',val:'34',lbl:'Profile Views'},{icon:'💬',val:'7',lbl:'Buyer Messages'},{icon:'₹',val:'₹1.2L',lbl:'Pending Value'}]
+    : [{icon:'🌾',val:'48',lbl:'Available Crops'},{icon:'🛒',val:'3',lbl:'Active Bids'},{icon:'✅',val:'1',lbl:'Purchases Made'},{icon:'📍',val:'4',lbl:'Districts'}];
+  document.getElementById('dStats').innerHTML=stats.map(s=>`
+    <div class="dstat"><div class="dstat-icon">${s.icon}</div><div class="dstat-val">${s.val}</div><div class="dstat-lbl">${s.lbl}</div></div>`).join('');
+  renderDashPrices();
+  document.getElementById('dListTitle').textContent=u.role==='farmer'?'Marketplace Listings':'Browse Crops';
+  document.getElementById('cropGrid').innerHTML=cropCards(u);
+}
+
+function cropCards(u) {
+  return marketCrops.map(c=>`
+    <div class="crop-card">
+      <div class="cc-top"><span class="cc-em">${c.img}</span>
+        <div><div class="cc-name">${c.name} <span class="grade-pill g${c.grade.replace('+','')}">${c.grade}</span></div><div class="cc-loc">📍 ${c.location} • ${c.farmer}</div></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+        <div><div class="cc-price">₹${c.price.toLocaleString()}</div><div class="cc-psub">per quintal</div></div>
+        <div style="text-align:right;font-size:13px;color:var(--muted)">${c.qty} qtl<br/>available</div>
+      </div>
+      <button class="btn-bid" onclick="alert('${u.role==='farmer'?'Contact buyer':'Place bid'} coming soon!')">${u.role==='farmer'?'💬 Contact Buyer':'🛒 Place Bid'}</button>
+    </div>`).join('');
+}
+
+function buildListingsTab() {
+  const u=curUser;
+  document.getElementById('listTabTitle').textContent=u.role==='farmer'?'🌾 Marketplace Listings':'🛒 Browse Crops';
+  document.getElementById('listTabSub').textContent=u.role==='farmer'?'Crops available to connect with buyers':'Fresh listings from farmers across AP & Telangana';
+  document.getElementById('cropGrid2').innerHTML=cropCards(u);
+}
+
+function filterDashPrices(cat, btn) {
+  dashPriceFilter = cat;
+  document.querySelectorAll('#tabPrices .ftab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDashPricesTab();
+}
+
+function renderDashPricesTab() {
+  const q=(document.getElementById('dashPriceSearch2')?.value||'').toLowerCase();
+  const rows=priceData.filter(p=>(dashPriceFilter==='all'||p.cat===dashPriceFilter)&&(p.name.toLowerCase().includes(q)||p.nameTE.includes(q)));
+  const body=document.getElementById('dashPriceBodyFull');
+  if(!body) return;
+  body.innerHTML=rows.map(p=>{
+    const diff=p.modal-p.prev, pct=((diff/p.prev)*100).toFixed(1);
+    const cls=diff>0?'price-up':diff<0?'price-down':'price-neu';
+    const arrow=diff>0?'▲':diff<0?'▼':'─';
+    return `<tr>
+      <td><div class="crop-cell"><span class="crop-em">${p.em}</span><div><div style="font-weight:600">${p.name}</div><div style="font-size:11px;color:#6b7280">${p.nameTE}</div></div></div></td>
+      <td style="color:#6b7280;font-size:12px">${p.unit}</td>
+      <td>₹${p.min.toLocaleString()}</td><td>₹${p.max.toLocaleString()}</td>
+      <td style="font-weight:700;color:#0f4c2a">₹${p.modal.toLocaleString()}</td>
+      <td class="${cls}">${arrow} ${Math.abs(pct)}%</td>
+      <td style="font-size:12px;color:#6b7280">📍 ${p.market}</td>
+    </tr>`;
+  }).join('');
+}
+
+function buildProfile() {
+  const u=curUser;
+  const init=u.name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);
+  document.getElementById('profAv').textContent=init;
+  document.getElementById('profName').textContent=u.name;
+  document.getElementById('profRoleBadge').textContent=u.role==='farmer'?'🌾 Farmer':'🏢 Buyer';
+  document.getElementById('profJoined').textContent=`Joined: ${u.joined||'Today'}`;
+  const farmerFields = u.role==='farmer' ? `
+    <div class="prof-row"><span class="prof-icon">📍</span><div><div class="prof-lbl">District</div><div class="prof-val">${u.district||'—'}</div></div></div>
+    <div class="prof-row"><span class="prof-icon">🌱</span><div><div class="prof-lbl">Land Area</div><div class="prof-val">${u.land?u.land+' Acres':'—'}</div></div></div>` : `
+    <div class="prof-row"><span class="prof-icon">🏢</span><div><div class="prof-lbl">Company</div><div class="prof-val">${u.company||'—'}</div></div></div>`;
+  document.getElementById('profFields').innerHTML=`
+    <div class="prof-row"><span class="prof-icon">✉️</span><div><div class="prof-lbl">Email</div><div class="prof-val">${u.email}</div></div></div>
+    <div class="prof-row"><span class="prof-icon">📱</span><div><div class="prof-lbl">Mobile</div><div class="prof-val">${u.mobile||'—'}</div></div></div>
+    ${farmerFields}
+    <div class="prof-row"><span class="prof-icon">🔒</span><div><div class="prof-lbl">Password</div><div class="prof-val">••••••••</div></div></div>`;
+  document.getElementById('pwChangeErr').style.display='none';
+  document.getElementById('pwChangeOk').style.display='none';
+}
+
+async function changePassword() {
+  const cur=document.getElementById('curPw').value;
+  const nw=document.getElementById('newPw').value;
+  const conf=document.getElementById('confPw').value;
+  const errEl=document.getElementById('pwChangeErr');
+  const okEl=document.getElementById('pwChangeOk');
+  errEl.classList.remove('show'); okEl.style.display='none';
+  if(!cur){ errEl.textContent='❌ Enter your current password.'; errEl.classList.add('show'); return; }
+  if(nw.length<8){ errEl.textContent='❌ New password must be at least 8 characters.'; errEl.classList.add('show'); return; }
+  if(nw!==conf){ errEl.textContent='❌ New passwords do not match.'; errEl.classList.add('show'); return; }
+  try {
+    const { ok, data } = await api('/auth/change-password', 'PUT',
+      { current_password: cur, new_password: nw }, true);
+    if (!ok) { errEl.textContent='❌ '+data.error; errEl.classList.add('show'); return; }
+    document.getElementById('curPw').value='';
+    document.getElementById('newPw').value='';
+    document.getElementById('confPw').value='';
+    okEl.style.display='block';
+  } catch(e) {
+    errEl.textContent='❌ Network error. Please try again.'; errEl.classList.add('show');
+  }
+}
+
+function logout() {
+  clearSession(); curUser=null;
+  document.getElementById('dashboard').classList.remove('show');
+  document.getElementById('landing').style.display='';
+  document.getElementById('navLinks').style.display='';
+  document.getElementById('navUser').style.display='none';
+}
+
+function goToLanding() {
+  document.getElementById('dashboard').classList.remove('show');
+  document.getElementById('landing').style.display='';
+}
+
+
+// ─── PHOTO UPLOAD ─────────────────────────────────────────────────────────────
+let uploadedPhotos = []; // array of base64 strings
+
+function handlePhotoUpload(event) {
+  const files = Array.from(event.target.files);
+  const remaining = 3 - uploadedPhotos.length;
+  if (remaining <= 0) { alert('Maximum 3 photos allowed.'); return; }
+  files.slice(0, remaining).forEach(file => {
+    // Resize and compress before storing
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        const MAX = 800;
+        let w = img.width, h = img.height;
+        if (w > MAX) { h = h * MAX / w; w = MAX; }
+        if (h > MAX) { w = w * MAX / h; h = MAX; }
+        canvas.width = w; canvas.height = h;
+        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+        const base64 = canvas.toDataURL('image/jpeg', 0.7);
+        uploadedPhotos.push(base64);
+        renderPhotoPreviews();
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  });
+  event.target.value = ''; // reset input
+}
+
+function renderPhotoPreviews() {
+  const preview = document.getElementById('photoPreview');
+  const dropzone = document.getElementById('photoDropzone');
+  if (!preview) return;
+  preview.innerHTML = uploadedPhotos.map((p, i) => `
+    <div style="position:relative;width:80px;height:65px;">
+      <img src="${p}" style="width:80px;height:65px;object-fit:cover;border-radius:8px;border:2px solid #86efac;"/>
+      <button onclick="removePhoto(${i})" style="position:absolute;top:-6px;right:-6px;background:#ef4444;border:none;border-radius:50%;width:20px;height:20px;color:#fff;font-size:11px;cursor:pointer;font-weight:700;line-height:1;">✕</button>
+    </div>`).join('');
+  if (dropzone) {
+    dropzone.style.display = uploadedPhotos.length >= 3 ? 'none' : '';
+    dropzone.textContent = uploadedPhotos.length > 0 ? `📷 Add more photos (${3 - uploadedPhotos.length} left)` : '📷 Click to add photos';
+  }
+}
+
+function removePhoto(index) {
+  uploadedPhotos.splice(index, 1);
+  renderPhotoPreviews();
+}
+
+// Photo modal for full-size view
+function openPhotoModal(src) {
+  const modal = document.getElementById('photoModal');
+  const img   = document.getElementById('photoModalImg');
+  if (!modal || !img) return;
+  img.src = src;
+  modal.style.display = 'flex';
+}
+function closePhotoModal() {
+  document.getElementById('photoModal').style.display = 'none';
+}
+
+
+// ─── FORGOT PASSWORD ─────────────────────────────────────────────────────────
+function openForgotPassword() {
+  document.getElementById('forgotModal').style.display = 'flex';
+  document.getElementById('forgotFormDiv').style.display = '';
+  document.getElementById('forgotSuccess').style.display = 'none';
+  document.getElementById('forgotEmail').value = '';
+  document.getElementById('forgotErr').classList.remove('show');
+}
+function closeForgotPassword() {
+  document.getElementById('forgotModal').style.display = 'none';
+}
+
+async function submitForgotPassword() {
+  const email = document.getElementById('forgotEmail').value.trim();
+  const errEl = document.getElementById('forgotEmailErr');
+  const alertEl = document.getElementById('forgotErr');
+  errEl.classList.toggle('show', !email || !/\S+@\S+\.\S+/.test(email));
+  alertEl.classList.remove('show');
+  if (!email || !/\S+@\S+\.\S+/.test(email)) return;
+
+  const btn = document.querySelector('#forgotModal .btn-sub');
+  btn.textContent = 'Sending...'; btn.disabled = true;
+  try {
+    const { ok, data } = await api('/auth/forgot-password', 'POST', { email });
+    if (!ok) { alertEl.textContent = '❌ ' + data.error; alertEl.classList.add('show'); return; }
+    document.getElementById('forgotFormDiv').style.display = 'none';
+    document.getElementById('forgotSuccess').style.display = 'block';
+  } catch(e) {
+    alertEl.textContent = '❌ Network error. Try again.'; alertEl.classList.add('show');
+  } finally {
+    btn.textContent = 'Send Reset Link →'; btn.disabled = false;
+  }
+}
+
+// ─── RESET PASSWORD ───────────────────────────────────────────────────────────
+let resetToken = null;
+
+async function checkResetToken() {
+  const params = new URLSearchParams(window.location.search);
+  const token  = params.get('reset_token');
+  if (!token) return;
+  try {
+    const { ok, data } = await api(`/auth/verify-reset-token/${token}`);
+    if (!ok) { alert('This reset link is invalid or has expired. Please request a new one.'); return; }
+    resetToken = token;
+    document.getElementById('resetEmailLabel').textContent = `Setting new password for: ${data.email}`;
+    document.getElementById('resetModal').style.display = 'flex';
+    document.getElementById('resetFormDiv').style.display = '';
+    document.getElementById('resetSuccess').style.display = 'none';
+    // Clean URL
+    window.history.replaceState({}, document.title, window.location.pathname);
+  } catch(e) {
+    console.error('Token check error:', e);
+  }
+}
+
+function closeResetModal() {
+  document.getElementById('resetModal').style.display = 'none';
+  resetToken = null;
+}
+
+async function submitResetPassword() {
+  const newPw  = document.getElementById('resetNewPw').value;
+  const confPw = document.getElementById('resetConfPw').value;
+  const errEl  = document.getElementById('resetErr');
+  document.getElementById('resetNewPwErr').classList.toggle('show', newPw.length < 8);
+  document.getElementById('resetConfPwErr').classList.toggle('show', newPw !== confPw);
+  errEl.classList.remove('show');
+  if (newPw.length < 8 || newPw !== confPw) return;
+
+  const btn = document.querySelector('#resetModal .btn-sub');
+  btn.textContent = 'Resetting...'; btn.disabled = true;
+  try {
+    const { ok, data } = await api('/auth/reset-password', 'POST', { token: resetToken, new_password: newPw });
+    if (!ok) { errEl.textContent = '❌ ' + data.error; errEl.classList.add('show'); return; }
+    document.getElementById('resetFormDiv').style.display = 'none';
+    document.getElementById('resetSuccess').style.display = 'block';
+  } catch(e) {
+    errEl.textContent = '❌ Network error. Try again.'; errEl.classList.add('show');
+  } finally {
+    btn.textContent = 'Reset Password →'; btn.disabled = false;
+  }
+}
+
+// ─── TERMS & PRIVACY MODALS ───────────────────────────────────────────────────
+function openModal(type) {
+  document.getElementById(type + 'Modal').style.display = 'flex';
+}
+function closeModal(type) {
+  document.getElementById(type + 'Modal').style.display = 'none';
+}
+
+function scrollTop(){ window.scrollTo({top:0,behavior:'smooth'}); }
+
+
+// ─── LIVE MANDI PRICES ────────────────────────────────────────────────────────
+let liveMandiData = null;
+let usingLivePrices = false;
+
+async function fetchLiveMandiPrices() {
+  try {
+    const API_KEY = 'your-personal-key-here'; // Use sample key
+    const SAMPLE_KEY = '579b464db66ec23bdd000001cdd3946e44ce4aad7209ff7b23ac571b';
+    const key = API_KEY !== 'your-personal-key-here' ? API_KEY : SAMPLE_KEY;
+    const states = ['Andhra Pradesh', 'Telangana'];
+    const allRecords = [];
+
+    for (const state of states) {
+      try {
+        const url = `https://api.data.gov.in/resource/9ef84268-d588-465a-a308-a864a43d0070?api-key=${key}&format=json&limit=100&filters[state]=${encodeURIComponent(state)}`;
+        const res = await fetch(url);
+        if (!res.ok) continue;
+        const data = await res.json();
+        if (data.records?.length) allRecords.push(...data.records);
+      } catch(e) { continue; }
+    }
+
+    if (!allRecords.length) return false;
+
+    liveMandiData = allRecords.map(r => ({
+      state:       r.state,
+      district:    r.district,
+      market:      r.market,
+      commodity:   r.commodity,
+      variety:     r.variety || '',
+      min_price:   parseFloat(r.min_price)   || 0,
+      max_price:   parseFloat(r.max_price)   || 0,
+      modal_price: parseFloat(r.modal_price) || 0,
+      date:        r.arrival_date || r.date  || '',
+    }));
+
+    usingLivePrices = true;
+
+    const dateStr = liveMandiData[0]?.date || new Date().toLocaleDateString('en-IN');
+    ['priceDate','dashPriceDate','landingPriceDate'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = dateStr;
+    });
+
+    console.log(`✅ Live mandi prices loaded: ${liveMandiData.length} records`);
+    return true;
+  } catch(e) {
+    console.log('⚠️ Live prices unavailable, using reference data');
+    return false;
+  }
+}
+
+function renderLivePriceTable(searchQuery = '', filterCat = 'all') {
+  const body = document.getElementById('priceBody');
+  if (!body || !liveMandiData) return;
+
+  const q = searchQuery.toLowerCase();
+  let rows = liveMandiData.filter(r => {
+    const matchSearch = !q || r.commodity.toLowerCase().includes(q) || r.market.toLowerCase().includes(q) || r.district.toLowerCase().includes(q);
+    return matchSearch;
+  });
+
+  if (!rows.length) { body.innerHTML = '<tr><td colspan="7" class="no-results">No results found.</td></tr>'; return; }
+
+  // Sort by commodity name
+  rows = rows.sort((a,b) => a.commodity.localeCompare(b.commodity));
+
+  body.innerHTML = rows.map(r => `<tr>
+    <td><div class="crop-cell"><span class="crop-em">🌾</span>
+      <div><div style="font-weight:600">${r.commodity}</div>
+      <div style="font-size:11px;color:#6b7280">${r.variety || ''}</div></div></div></td>
+    <td style="color:#6b7280;font-size:12px">Qtl</td>
+    <td>₹${r.min_price.toLocaleString()}</td>
+    <td>₹${r.max_price.toLocaleString()}</td>
+    <td style="font-weight:700;color:#0f4c2a">₹${r.modal_price.toLocaleString()}</td>
+    <td><span style="background:#dcfce7;color:#15803d;border-radius:20px;padding:2px 8px;font-size:11px;font-weight:700;">LIVE</span></td>
+    <td style="font-size:12px;color:#6b7280">📍 ${r.market}, ${r.district}</td>
+  </tr>`).join('');
+}
+
+function renderLiveDashPrices(searchQuery = '') {
+  const body = document.getElementById('dashPriceBody');
+  if (!body || !liveMandiData) return;
+  const q = searchQuery.toLowerCase();
+  const rows = liveMandiData
+    .filter(r => !q || r.commodity.toLowerCase().includes(q))
+    .slice(0, 20);
+  body.innerHTML = rows.map(r => `<tr>
+    <td><div class="crop-cell"><span style="font-size:18px">🌾</span><span style="font-weight:600">${r.commodity}</span></div></td>
+    <td style="font-weight:700;color:#0f4c2a">₹${r.modal_price.toLocaleString()}</td>
+    <td style="color:#6b7280">₹${r.min_price.toLocaleString()}</td>
+    <td style="color:#6b7280">₹${r.max_price.toLocaleString()}</td>
+    <td><span style="background:#dcfce7;color:#15803d;border-radius:20px;padding:2px 8px;font-size:10px;font-weight:700;">LIVE</span></td>
+  </tr>`).join('');
+}
+
+// ─── LISTINGS & BIDS ──────────────────────────────────────────────────────────
+
+// ── Post a new listing (farmers only) ────────────────────────────────────────
+async function postListing() {
+  const crop  = v('pCrop'), qty = v('pQty'), price = v('pPrice');
+  const grade = v('pGrade'), dist = v('pDistrict'), loc = v('pLoc'), desc = v('pDesc');
+  se('pCropErr', !crop); se('pQtyErr', !qty); se('pPriceErr', !price);
+  se('pDistErr', !dist); se('pLocErr', !loc);
+  if (!crop || !qty || !price || !dist || !loc) return;
+
+  const btn = document.querySelector('#postForm .btn-sub');
+  btn.textContent = 'Posting...'; btn.disabled = true;
+  try {
+    const { ok, data } = await api('/listings', 'POST', {
+      crop_name: crop, quantity: parseFloat(qty), price: parseFloat(price),
+      grade, district: dist, location: loc, description: desc,
+      photos: uploadedPhotos.length ? uploadedPhotos : undefined
+    }, true);
+    if (!ok) {
+      const el = document.getElementById('postErr');
+      el.textContent = data.error; el.classList.add('show'); return;
+    }
+    // Show success, reset form
+    document.getElementById('postForm').style.display = 'none';
+    document.getElementById('postSuccess').style.display = 'block';
+    ['pCrop','pQty','pPrice','pLoc','pDesc'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('pGrade').value = 'A';
+    document.getElementById('pDistrict').value = '';
+    uploadedPhotos = [];
+    renderPhotoPreviews();
+  } catch(e) {
+    const el = document.getElementById('postErr');
+    el.textContent = 'Network error. Try again.'; el.classList.add('show');
+  } finally {
+    btn.textContent = '📤 Post Listing'; btn.disabled = false;
+  }
+}
+
+// ── Load browse listings (public) ─────────────────────────────────────────────
+async function loadBrowseListings() {
+  const q    = document.getElementById('browseSearch')?.value || '';
+  const dist = document.getElementById('browseDistrict')?.value || '';
+  const grid = document.getElementById('browseListings');
+  if (!grid) return;
+  grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)">Loading...</div>';
+  try {
+    let url = '/listings?';
+    if (q)    url += `crop=${encodeURIComponent(q)}&`;
+    if (dist) url += `district=${encodeURIComponent(dist)}&`;
+    const { ok, data } = await api(url);
+    if (!ok || !data.listings.length) {
+      grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)">No listings found.</div>';
+      return;
+    }
+    grid.innerHTML = data.listings.map(l => browseCard(l)).join('');
+  } catch(e) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:#dc2626">Error loading listings.</div>';
+  }
+}
+
+function browseCard(l) {
+  const gradeColor = {'A+':'#16a34a','A':'#2563eb','B':'#d97706'}[l.grade] || '#6b7280';
+  let photos = [];
+  try { if (l.photos) photos = JSON.parse(l.photos); } catch(e) {}
+  const wa = `https://wa.me/${l.farmer_mobile?.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(`Hi, I am interested in your ${l.crop_name} listing on Rytheraju. ${l.quantity} quintals at ₹${l.price}/qtl in ${l.location}.`)}`;
+  const isBuyer = curUser?.role === 'buyer';
+  const photoHtml = photos.length
+    ? '<div style="display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;">' +
+      photos.map(p => `<img src="${p}" style="width:80px;height:65px;object-fit:cover;border-radius:8px;flex-shrink:0;cursor:pointer;border:2px solid #e5e7eb;" onclick="openPhotoModal(this.src)"/>`).join('') +
+      '</div>'
+    : '';
+
+  return `<div style="background:#fff;border-radius:16px;padding:20px;border:1.5px solid #e5e7eb;transition:.2s;" onmouseover="this.style.borderColor='#22c55e'" onmouseout="this.style.borderColor='#e5e7eb'">
+    ${photoHtml}
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+      <div>
+        <div style="font-weight:700;font-size:16px;color:#0f4c2a">${l.crop_name}</div>
+        <div style="font-size:12px;color:#6b7280;margin-top:3px;">📍 ${l.location}, ${l.district||''} • ${l.farmer_name||'Farmer'}</div>
+      </div>
+      <span style="background:${gradeColor};color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:700;">${l.grade}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:14px;">
+      <div>
+        <div style="font-family:'Playfair Display',serif;font-size:22px;color:#1a6b3c;font-weight:700;">₹${Number(l.price).toLocaleString()}</div>
+        <div style="font-size:11px;color:#6b7280">per quintal</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-weight:700;font-size:16px;color:#0f4c2a">${l.quantity} qtl</div>
+        <div style="font-size:11px;color:#6b7280">available</div>
+      </div>
+    </div>
+    ${l.description ? `<div style="font-size:12px;color:var(--muted);margin-bottom:12px;padding:8px;background:#f9fafb;border-radius:8px;">${l.description}</div>` : ''}
+    <div style="display:flex;gap:8px;">
+      ${isBuyer ? `<button onclick="openBidModal(${l.id},'${l.crop_name}',${l.price})" style="flex:1;background:var(--gl);color:var(--g1);border:1.5px solid #86efac;border-radius:10px;padding:9px;font-weight:700;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;">🏷️ Place Bid</button>` : ''}
+      ${l.farmer_mobile ? `<a href="${wa}" target="_blank" style="flex:1;background:#25d366;color:#fff;border:none;border-radius:10px;padding:9px;font-weight:700;font-size:13px;cursor:pointer;font-family:'DM Sans',sans-serif;text-decoration:none;text-align:center;display:flex;align-items:center;justify-content:center;gap:5px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+        WhatsApp
+      </a>` : ''}
+    </div>
+    <div style="font-size:11px;color:var(--muted);margin-top:10px;">Posted ${new Date(l.created_at).toLocaleDateString('en-IN')}</div>
+  </div>`;
+}
+
+// ── Bid Modal ─────────────────────────────────────────────────────────────────
+let activeBidListingId = null;
+
+function openBidModal(listingId, cropName, listingPrice) {
+  activeBidListingId = listingId;
+  document.getElementById('bidModalTitle').textContent = `Place Bid — ${cropName}`;
+  document.getElementById('bidListingPrice').textContent = `Farmer asking: ₹${Number(listingPrice).toLocaleString()}/qtl`;
+  document.getElementById('bidPrice').value = listingPrice;
+  document.getElementById('bidQty').value = '';
+  document.getElementById('bidMsg').value = '';
+  document.getElementById('bidErr').classList.remove('show');
+  document.getElementById('bidSuccess').style.display = 'none';
+  document.getElementById('bidFormInner').style.display = '';
+  document.getElementById('bidModal').style.display = 'flex';
+}
+
+function closeBidModal() {
+  document.getElementById('bidModal').style.display = 'none';
+  activeBidListingId = null;
+}
+
+async function submitBid() {
+  const price = document.getElementById('bidPrice').value;
+  const qty   = document.getElementById('bidQty').value;
+  const msg   = document.getElementById('bidMsg').value;
+  if (!price || parseFloat(price) <= 0) {
+    const el = document.getElementById('bidErr');
+    el.textContent = 'Please enter a valid bid price.'; el.classList.add('show'); return;
+  }
+  const btn = document.getElementById('bidSubmitBtn');
+  btn.textContent = 'Submitting...'; btn.disabled = true;
+  try {
+    const { ok, data } = await api('/bids', 'POST', {
+      listing_id: activeBidListingId,
+      bid_price: parseFloat(price),
+      quantity: qty ? parseFloat(qty) : null,
+      message: msg || null
+    }, true);
+    if (!ok) {
+      const el = document.getElementById('bidErr');
+      el.textContent = data.error; el.classList.add('show'); return;
+    }
+    document.getElementById('bidFormInner').style.display = 'none';
+    document.getElementById('bidSuccess').style.display = 'block';
+  } catch(e) {
+    const el = document.getElementById('bidErr');
+    el.textContent = 'Network error. Try again.'; el.classList.add('show');
+  } finally {
+    btn.textContent = 'Submit Bid'; btn.disabled = false;
+  }
+}
+
+// ── My Listings (Farmers) ─────────────────────────────────────────────────────
+async function loadMyListings() {
+  const grid = document.getElementById('myListingsGrid');
+  if (!grid) return;
+  grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)">Loading...</div>';
+  try {
+    const { ok, data } = await api('/listings/mine', 'GET', null, true);
+    if (!ok || !data.listings.length) {
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;">
+        <div style="font-size:48px;margin-bottom:12px;">📦</div>
+        <div style="color:var(--muted);font-size:15px;">No listings yet.</div>
+        <button onclick="switchDashTab('post')" class="btn-sub" style="width:auto;padding:10px 24px;margin-top:16px;font-size:13px;">➕ Post Your First Crop</button>
+      </div>`;
+      return;
+    }
+    grid.innerHTML = data.listings.map(l => myListingCard(l)).join('');
+  } catch(e) {
+    grid.innerHTML = '<div style="color:#dc2626;padding:20px;">Error loading listings.</div>';
+  }
+}
+
+async function deleteListing(id) {
+  if (!confirm('Delete this listing?')) return;
+  const { ok } = await api(`/listings/${id}`, 'DELETE', null, true);
+  if (ok) loadMyListings();
+}
+
+async function loadBidsForListing(listingId, btnEl) {
+  const bidsDiv = document.getElementById(`bids_${listingId}`);
+  if (bidsDiv.style.display !== 'none') { bidsDiv.style.display = 'none'; btnEl.textContent = '👁️ View Bids'; return; }
+  bidsDiv.style.display = 'block';
+  btnEl.textContent = '🔼 Hide Bids';
+  bidsDiv.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:8px;">Loading bids...</div>';
+  try {
+    const { ok, data } = await api(`/bids/listing/${listingId}`, 'GET', null, true);
+    if (!ok || !data.bids.length) { bidsDiv.innerHTML = '<div style="color:var(--muted);font-size:13px;padding:8px;">No bids yet.</div>'; return; }
+    bidsDiv.innerHTML = data.bids.map(b => {
+      const wa = `https://wa.me/${b.buyer_mobile?.replace(/[^0-9]/g,'')}?text=${encodeURIComponent(`Hi ${b.buyer_name}, I accept your bid of ₹${b.bid_price}/qtl on Rytheraju. Let us arrange the pickup.`)}`;
+      return `<div style="background:#f9fafb;border-radius:10px;padding:12px;margin-bottom:8px;border:1px solid #e5e7eb;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div style="font-weight:700;font-size:14px;color:#0f4c2a">₹${Number(b.bid_price).toLocaleString()}/qtl ${b.quantity ? `· ${b.quantity} qtl` : ''}</div>
+            <div style="font-size:12px;color:var(--muted);margin-top:2px;">👤 ${b.buyer_name} ${b.company ? '· '+b.company : ''}</div>
+            ${b.message ? `<div style="font-size:12px;color:#374151;margin-top:4px;font-style:italic;">"${b.message}"</div>` : ''}
+          </div>
+          <span style="background:${b.status==='accepted'?'#dcfce7':b.status==='rejected'?'#fee2e2':'#fef9c3'};color:${b.status==='accepted'?'#15803d':b.status==='rejected'?'#dc2626':'#92400e'};border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;">${b.status}</span>
+        </div>
+        ${b.status==='pending' && b.buyer_mobile ? `<div style="display:flex;gap:8px;margin-top:10px;">
+          <a href="${wa}" target="_blank" style="flex:1;background:#25d366;color:#fff;border:none;border-radius:8px;padding:8px;font-weight:700;font-size:12px;cursor:pointer;text-decoration:none;text-align:center;">💬 WhatsApp Buyer</a>
+          <button onclick="updateBidStatus(${b.id},'accepted')" style="flex:1;background:var(--g2);color:#fff;border:none;border-radius:8px;padding:8px;font-weight:700;font-size:12px;cursor:pointer;">✅ Accept</button>
+          <button onclick="updateBidStatus(${b.id},'rejected')" style="flex:1;background:#f3f4f6;color:#374151;border:none;border-radius:8px;padding:8px;font-weight:700;font-size:12px;cursor:pointer;">❌ Reject</button>
+        </div>` : ''}
+      </div>`;
+    }).join('');
+  } catch(e) {
+    bidsDiv.innerHTML = '<div style="color:#dc2626;font-size:13px;padding:8px;">Error loading bids.</div>';
+  }
+}
+
+async function updateBidStatus(bidId, status) {
+  const { ok } = await api(`/bids/${bidId}/status`, 'PUT', { status }, true);
+  if (ok) loadMyListings();
+}
+
+function myListingCard(l) {
+  const statusColor = l.status==='active'?'#15803d':l.status==='sold'?'#2563eb':'#9ca3af';
+  const statusBg    = l.status==='active'?'#dcfce7':l.status==='sold'?'#dbeafe':'#f3f4f6';
+  let photos = [];
+  try { if (l.photos) photos = JSON.parse(l.photos); } catch(e) {}
+  const photoHtml = photos.length
+    ? '<div style="display:flex;gap:6px;margin-bottom:14px;overflow-x:auto;">' +
+      photos.map(p => `<img src="${p}" style="width:80px;height:65px;object-fit:cover;border-radius:8px;flex-shrink:0;cursor:pointer;border:2px solid #86efac;" onclick="openPhotoModal(this.src)"/>`).join('') +
+      '</div>'
+    : '';
+  return `<div style="background:#fff;border-radius:16px;padding:20px;border:1.5px solid #e5e7eb;">
+    ${photoHtml}
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+      <div>
+        <div style="font-weight:700;font-size:16px;color:#0f4c2a">${l.crop_name}</div>
+        <div style="font-size:12px;color:#6b7280;margin-top:3px;">📍 ${l.location} · Grade ${l.grade}</div>
+      </div>
+      <span style="background:${statusBg};color:${statusColor};border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;">${l.status}</span>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-bottom:14px;">
+      <div><div style="font-family:'Playfair Display',serif;font-size:20px;color:#1a6b3c;font-weight:700;">₹${Number(l.price).toLocaleString()}/qtl</div></div>
+      <div style="text-align:right;"><div style="font-weight:700;color:#0f4c2a">${l.quantity} qtl</div><div style="font-size:11px;color:#6b7280">available</div></div>
+    </div>
+    ${photos.length ? `<div style="font-size:11px;color:#6b7280;margin-bottom:10px;">📸 ${photos.length} photo${photos.length>1?'s':''} attached</div>` : ''}
+    <div style="display:flex;gap:8px;margin-bottom:10px;">
+      <button onclick="loadBidsForListing(${l.id}, this)" style="flex:1;background:#dcfce7;color:#0f4c2a;border:1.5px solid #86efac;border-radius:8px;padding:8px;font-weight:700;font-size:12px;cursor:pointer;">👁️ View Bids</button>
+      <button onclick="deleteListing(${l.id})" style="background:#fee2e2;color:#dc2626;border:none;border-radius:8px;padding:8px 12px;font-weight:700;font-size:12px;cursor:pointer;">🗑️</button>
+    </div>
+    <div id="bids_${l.id}" style="display:none;margin-top:8px;"></div>
+    <div style="font-size:11px;color:#6b7280;">Posted ${new Date(l.created_at).toLocaleDateString('en-IN')}</div>
+  </div>`;
+}
+
+// ── My Bids (Buyers) ──────────────────────────────────────────────────────────
+async function loadMyBids() {
+  const grid = document.getElementById('myBidsGrid');
+  if (!grid) return;
+  grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--muted)">Loading...</div>';
+  try {
+    const { ok, data } = await api('/bids/mine', 'GET', null, true);
+    if (!ok || !data.bids.length) {
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;">
+        <div style="font-size:48px;margin-bottom:12px;">🏷️</div>
+        <div style="color:var(--muted);font-size:15px;">No bids placed yet.</div>
+        <button onclick="switchDashTab('browse')" class="btn-sub" style="width:auto;padding:10px 24px;margin-top:16px;font-size:13px;">🛒 Browse Crops</button>
+      </div>`;
+      return;
+    }
+    grid.innerHTML = data.bids.map(b => {
+      const statusColor = b.status==='accepted'?'#15803d':b.status==='rejected'?'#dc2626':'#92400e';
+      const statusBg    = b.status==='accepted'?'#dcfce7':b.status==='rejected'?'#fee2e2':'#fef9c3';
+      return `<div style="background:#fff;border-radius:16px;padding:20px;border:1.5px solid ${b.status==='accepted'?'#86efac':b.status==='rejected'?'#fecaca':'#e5e7eb'};">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;">
+          <div>
+            <div style="font-weight:700;font-size:16px;color:#0f4c2a">${b.crop_name}</div>
+            <div style="font-size:12px;color:#6b7280;margin-top:3px;">📍 ${b.location} · By ${b.farmer_name}</div>
+          </div>
+          <span style="background:${statusBg};color:${statusColor};border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;">${b.status}</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+          <div><div style="font-size:12px;color:#6b7280">Your Bid</div><div style="font-family:'Playfair Display',serif;font-size:20px;color:#1a6b3c;font-weight:700;">₹${Number(b.bid_price).toLocaleString()}/qtl</div></div>
+          <div style="text-align:right;"><div style="font-size:12px;color:#6b7280">Asking Price</div><div style="font-weight:700;color:#0f4c2a">₹${Number(b.listing_price).toLocaleString()}/qtl</div></div>
+        </div>
+        ${b.message ? `<div style="font-size:12px;color:#374151;padding:8px;background:#f9fafb;border-radius:8px;margin-bottom:8px;font-style:italic;">"${b.message}"</div>` : ''}
+        ${b.status==='accepted' ? `<div style="background:#dcfce7;border-radius:10px;padding:12px;text-align:center;">
+          <div style="font-weight:700;color:#15803d;margin-bottom:8px;">🎉 Bid Accepted! Contact farmer to arrange pickup.</div>
+        </div>` : ''}
+        <div style="font-size:11px;color:var(--muted);margin-top:8px;">Bid placed ${new Date(b.created_at).toLocaleDateString('en-IN')}</div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    grid.innerHTML = '<div style="color:#dc2626;padding:20px;">Error loading bids.</div>';
+  }
+}
+
+</script>
+
+<!-- BID MODAL -->
+<div id="bidModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:1000;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#fff;border-radius:20px;width:100%;max-width:440px;padding:28px;box-shadow:0 16px 48px rgba(15,76,42,.16);animation:slideUp .3s ease both;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+      <div style="font-family:'Playfair Display',serif;font-size:18px;color:var(--g1)" id="bidModalTitle">Place Bid</div>
+      <button onclick="closeBidModal()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);">✕</button>
+    </div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:20px;" id="bidListingPrice"></div>
+    <div id="bidSuccess" style="display:none;text-align:center;padding:20px 0;">
+      <div style="font-size:48px;margin-bottom:12px;">🎉</div>
+      <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--g1);margin-bottom:8px;">Bid Placed!</div>
+      <p style="color:var(--muted);font-size:13px;margin-bottom:16px;">The farmer will review your bid and contact you.</p>
+      <button onclick="closeBidModal();switchDashTab('mybids')" class="btn-sub" style="width:auto;padding:10px 24px;">View My Bids →</button>
+    </div>
+    <div id="bidFormInner">
+      <div class="fg"><label>Your Bid Price (₹/Quintal) *</label><input type="number" id="bidPrice" placeholder="Enter your price" min="1"/></div>
+      <div class="fg"><label>Quantity (Quintals) — optional</label><input type="number" id="bidQty" placeholder="How many quintals?" min="0.1" step="0.1"/></div>
+      <div class="fg"><label>Message to Farmer — optional</label><textarea id="bidMsg" rows="2" placeholder="e.g. I can collect within 3 days..." style="width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 13px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;resize:none;"></textarea></div>
+      <div class="ferr" id="bidErr" style="margin-bottom:10px;"></div>
+      <button id="bidSubmitBtn" class="btn-sub" onclick="submitBid()">Submit Bid →</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- PHOTO MODAL -->
+<div id="photoModal" onclick="closePhotoModal()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:2000;align-items:center;justify-content:center;padding:20px;cursor:zoom-out;">
+  <div onclick="event.stopPropagation()" style="position:relative;max-width:90vw;max-height:90vh;">
+    <img id="photoModalImg" src="" style="max-width:100%;max-height:85vh;border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,.5);"/>
+    <button onclick="closePhotoModal()" style="position:absolute;top:-12px;right:-12px;background:#fff;border:none;border-radius:50%;width:32px;height:32px;font-size:16px;cursor:pointer;font-weight:700;box-shadow:0 2px 8px rgba(0,0,0,.3);">✕</button>
+  </div>
+</div>
+
+
+<!-- ── FORGOT PASSWORD MODAL ── -->
+<div id="forgotModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:1100;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#fff;border-radius:20px;width:100%;max-width:440px;padding:32px;box-shadow:0 16px 48px rgba(15,76,42,.16);animation:slideUp .3s ease both;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;">
+      <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--g1)">🔒 Forgot Password</div>
+      <button onclick="closeForgotPassword()" style="background:none;border:none;font-size:20px;cursor:pointer;color:var(--muted);">✕</button>
+    </div>
+    <div id="forgotFormDiv">
+      <p style="color:var(--muted);font-size:14px;margin-bottom:20px;line-height:1.6;">Enter your registered email address and we will send you a password reset link.</p>
+      <div class="fg"><label>Email Address</label><input type="email" id="forgotEmail" placeholder="your@email.com"/><div class="ferr" id="forgotEmailErr">Enter a valid email.</div></div>
+      <div class="alert-err" id="forgotErr" style="margin-bottom:12px;"></div>
+      <button class="btn-sub" onclick="submitForgotPassword()">Send Reset Link →</button>
+    </div>
+    <div id="forgotSuccess" style="display:none;text-align:center;padding:10px 0;">
+      <div style="font-size:48px;margin-bottom:12px;">📧</div>
+      <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--g1);margin-bottom:8px;">Check your email!</div>
+      <p style="color:var(--muted);font-size:14px;line-height:1.6;">We have sent a password reset link to your email. Please check your inbox and spam folder.</p>
+      <button onclick="closeForgotPassword()" class="btn-sub" style="margin-top:20px;">Back to Login</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── RESET PASSWORD MODAL ── -->
+<div id="resetModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:1100;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#fff;border-radius:20px;width:100%;max-width:440px;padding:32px;box-shadow:0 16px 48px rgba(15,76,42,.16);animation:slideUp .3s ease both;">
+    <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--g1);margin-bottom:8px;">🔑 Set New Password</div>
+    <p style="color:var(--muted);font-size:14px;margin-bottom:20px;" id="resetEmailLabel"></p>
+    <div id="resetFormDiv">
+      <div class="fg"><label>New Password</label>
+        <div class="pw-wrap"><input type="password" id="resetNewPw" placeholder="Min 8 characters" oninput="chkStr(this.value)"/><button class="tpw" onclick="tpw('resetNewPw',this)" tabindex="-1">👁️</button></div>
+        <div class="str-bar"><div class="str-seg" id="s1"></div><div class="str-seg" id="s2"></div><div class="str-seg" id="s3"></div><div class="str-seg" id="s4"></div></div>
+        <div class="ferr" id="resetNewPwErr">Minimum 8 characters.</div>
+      </div>
+      <div class="fg"><label>Confirm New Password</label>
+        <div class="pw-wrap"><input type="password" id="resetConfPw" placeholder="Re-enter password"/><button class="tpw" onclick="tpw('resetConfPw',this)" tabindex="-1">👁️</button></div>
+        <div class="ferr" id="resetConfPwErr">Passwords do not match.</div>
+      </div>
+      <div class="alert-err" id="resetErr" style="margin-bottom:12px;"></div>
+      <button class="btn-sub" onclick="submitResetPassword()">Reset Password →</button>
+    </div>
+    <div id="resetSuccess" style="display:none;text-align:center;padding:10px 0;">
+      <div style="font-size:48px;margin-bottom:12px;">✅</div>
+      <div style="font-family:'Playfair Display',serif;font-size:20px;color:var(--g1);margin-bottom:8px;">Password Reset!</div>
+      <p style="color:var(--muted);font-size:14px;margin-bottom:20px;">Your password has been updated. You can now log in.</p>
+      <button onclick="closeResetModal();openAuth('login')" class="btn-sub">Login Now →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TERMS OF SERVICE MODAL ── -->
+<div id="termsModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:1100;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#fff;border-radius:20px;width:100%;max-width:600px;max-height:80vh;overflow-y:auto;padding:32px;box-shadow:0 16px 48px rgba(15,76,42,.16);">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;position:sticky;top:0;background:#fff;padding-bottom:12px;border-bottom:1px solid var(--border);">
+      <div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--g1)">📋 Terms of Service</div>
+      <button onclick="closeModal('terms')" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);">✕</button>
+    </div>
+    <div style="color:#374151;font-size:14px;line-height:1.8;">
+      <p style="color:var(--muted);font-size:12px;margin-bottom:20px;">Last updated: April 2026</p>
+      <h3 style="color:var(--g1);margin:0 0 10px;">1. Acceptance of Terms</h3>
+      <p style="margin-bottom:16px;">By registering and using Rytheraju (రైతేరాజు), you agree to these Terms of Service. If you do not agree, please do not use the platform.</p>
+      <h3 style="color:var(--g1);margin:0 0 10px;">2. Platform Purpose</h3>
+      <p style="margin-bottom:16px;">Rytheraju is a marketplace connecting farmers and buyers in Andhra Pradesh and Telangana. We facilitate crop listings and bidding but are not a party to transactions between farmers and buyers.</p>
+      <h3 style="color:var(--g1);margin:0 0 10px;">3. User Accounts</h3>
+      <p style="margin-bottom:16px;">You must provide accurate information during registration. You are responsible for maintaining the confidentiality of your password. Each person may only have one account.</p>
+      <h3 style="color:var(--g1);margin:0 0 10px;">4. Farmers</h3>
+      <p style="margin-bottom:16px;">Farmers must list only crops they own and have the right to sell. Listings must accurately describe the crop, quantity, grade and price. False listings may result in account suspension.</p>
+      <h3 style="color:var(--g1);margin:0 0 10px;">5. Buyers</h3>
+      <p style="margin-bottom:16px;">Buyers must place bids in good faith. Accepting a bid creates an obligation to complete the purchase. Repeated bid cancellations may result in account suspension.</p>
+      <h3 style="color:var(--g1);margin:0 0 10px;">6. Prohibited Activities</h3>
+      <p style="margin-bottom:16px;">Users must not post false information, engage in price manipulation, harass other users, or use the platform for any illegal purpose.</p>
+      <h3 style="color:var(--g1);margin:0 0 10px;">7. Limitation of Liability</h3>
+      <p style="margin-bottom:16px;">Rytheraju is not liable for any losses arising from transactions between farmers and buyers. We do not guarantee the quality, quantity or delivery of any crop listed on the platform.</p>
+      <h3 style="color:var(--g1);margin:0 0 10px;">8. Changes to Terms</h3>
+      <p style="margin-bottom:16px;">We may update these terms at any time. Continued use of the platform constitutes acceptance of the updated terms.</p>
+      <h3 style="color:var(--g1);margin:0 0 10px;">9. Contact</h3>
+      <p>For any questions, contact us at <a href="mailto:aazaad4u@gmail.com" style="color:var(--g2);">aazaad4u@gmail.com</a></p>
+    </div>
+    <div style="text-align:center;margin-top:24px;">
+      <button onclick="closeModal('terms')" class="btn-sub" style="width:auto;padding:10px 32px;">I Understand</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── PRIVACY POLICY MODAL ── -->
+<div id="privacyModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);z-index:1100;align-items:center;justify-content:center;padding:20px;">
+  <div style="background:#fff;border-radius:20px;width:100%;max-width:600px;max-height:80vh;overflow-y:auto;padding:32px;box-shadow:0 16px 48px rgba(15,76,42,.16);">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;position:sticky;top:0;background:#fff;padding-bottom:12px;border-bottom:1px solid var(--border);">
+      <div style="font-family:'Playfair Display',serif;font-size:22px;color:var(--g1)">🔐 Privacy Policy</div>
+      <button onclick="closeModal('privacy')" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted);">✕</button>
+    </div>
+    <div style="color:#374151;font-size:14px;line-height:1.8;">
+      <p style="color:var(--muted);font-size:12px;margin-bottom:20px;">Last updated: April 2026</p>
+      <h3 style="color:var(--g1);margin:0 0 10px;">1. Information We Collect</h3>
+      <p style="margin-bottom:16px;">We collect information you provide during registration including your name, email address, mobile number, district and role (farmer or buyer). Farmers additionally provide land area details.</p>
+      <h3 style="color:var(--g1);margin:0 0 10px;">2. How We Use Your Information</h3>
+      <p style="margin-bottom:16px;">Your information is used to operate the platform, send email notifications about bids and listings, and improve our services. We do not sell your personal data to third parties.</p>
+      <h3 style="color:var(--g1);margin:0 0 10px;">3. Information Sharing</h3>
+      <p style="margin-bottom:16px;">Your name and mobile number may be visible to other users for the purpose of facilitating transactions. Your email address is not shared with other users.</p>
+      <h3 style="color:var(--g1);margin:0 0 10px;">4. Data Security</h3>
+      <p style="margin-bottom:16px;">Your password is stored in encrypted form using bcrypt. We use JWT tokens for authentication. All data is stored in a secure PostgreSQL database.</p>
+      <h3 style="color:var(--g1);margin:0 0 10px;">5. Crop Photos</h3>
+      <p style="margin-bottom:16px;">Photos you upload are stored in our database and displayed to potential buyers. By uploading photos, you confirm you have the right to share them.</p>
+      <h3 style="color:var(--g1);margin:0 0 10px;">6. Email Communications</h3>
+      <p style="margin-bottom:16px;">We send transactional emails including welcome messages, bid notifications and password reset links. You cannot opt out of transactional emails while using the platform.</p>
+      <h3 style="color:var(--g1);margin:0 0 10px;">7. Data Retention</h3>
+      <p style="margin-bottom:16px;">We retain your data as long as your account is active. You may request deletion of your account by contacting us.</p>
+      <h3 style="color:var(--g1);margin:0 0 10px;">8. Your Rights</h3>
+      <p style="margin-bottom:16px;">You have the right to access, correct or delete your personal data. Contact us at <a href="mailto:aazaad4u@gmail.com" style="color:var(--g2);">aazaad4u@gmail.com</a> to exercise these rights.</p>
+      <h3 style="color:var(--g1);margin:0 0 10px;">9. Contact</h3>
+      <p>For privacy concerns, contact <a href="mailto:aazaad4u@gmail.com" style="color:var(--g2);">aazaad4u@gmail.com</a></p>
+    </div>
+    <div style="text-align:center;margin-top:24px;">
+      <button onclick="closeModal('privacy')" class="btn-sub" style="width:auto;padding:10px 32px;">I Understand</button>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
