@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "functions": {
+    "api/**/*.js": {
+      "memory": 256,
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    { "source": "/api/auth/register",           "destination": "/api/auth/register" },
+    { "source": "/api/auth/login",              "destination": "/api/auth/login" },
+    { "source": "/api/auth/me",                 "destination": "/api/auth/me" },
+    { "source": "/api/auth/forgot-password",    "destination": "/api/auth/forgot-password" },
+    { "source": "/api/auth/reset-password",     "destination": "/api/auth/reset-password" },
+    { "source": "/api/auth/verify-reset-token", "destination": "/api/auth/verify-reset-token" },
+    { "source": "/api/users/stats",             "destination": "/api/users/stats" },
+    { "source": "/api/users/profile",           "destination": "/api/users/profile" },
+    { "source": "/api/users/change-password",   "destination": "/api/users/change-password" },
+    { "source": "/api/listings/mine",           "destination": "/api/listings/mine" },
+    { "source": "/api/listings/:id",            "destination": "/api/listings/[id]" },
+    { "source": "/api/listings",                "destination": "/api/listings/index" },
+    { "source": "/api/bids/mine",               "destination": "/api/bids/mine" },
+    { "source": "/api/bids/listing/:id",        "destination": "/api/bids/listing?id=$id" },
+    { "source": "/api/bids/status/:id",         "destination": "/api/bids/status?id=$id" },
+    { "source": "/api/bids",                    "destination": "/api/bids/index" },
+    { "source": "/api/mandi",                   "destination": "/api/mandi/index" },
+    { "source": "/api/health",                  "destination": "/api/health" },
+    { "source": "/(.*)",                        "destination": "/index.html" }
+  ]
+}
